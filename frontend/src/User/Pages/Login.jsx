@@ -2,6 +2,28 @@ import React, { useState } from 'react'
 import globalimg from '../../assets/globalpersonimg.png'
 
 const Login = () => {
+  const [email, SetEmail] = useState();
+  const [password, SetPassword] = useState();
+  const [confirmPassword, SetConfirmPassword] = useState();
+
+  const ctrateAccount = (e) =>{
+    e.preventDefault();
+    if(!strongPassword(password)){
+      alert('Password is not strong');
+    }
+    if(password !== confirmPassword){
+      alert('Password didn \'t match');
+
+    }
+    console.log(email);
+    console.log(password);
+    
+  }
+
+  const strongPassword = (password) => {
+    const  StrongPasswordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return StrongPasswordregex.test(password);
+  }
   return (
     <>
     <div className='flex'>
@@ -9,16 +31,20 @@ const Login = () => {
       <div  className='w-1/2 h-screen bg-white'>
         <h1 className='text-black font-mono text-7xl pl-12 pt-10'>Welcome to Job Finder</h1>
         <p className='text-black font-mono text-base font-light pl-12 pt-5'>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-        <form action=""  className='pl-12 mt-14 flex flex-col relative space-y-20'>
+        <form action=""  className='pl-12 mt-14 flex flex-col relative space-y-20' onSubmit={ctrateAccount}>
           <div className='relative'>
             <label htmlFor="" className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>E-mail</label>
-            <input type="email" placeholder='examplaem@gmail.com' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none '/>
+            <input type="email" placeholder='examplaem@gmail.com' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={email} onChange={(e)=>SetEmail(e.target.value)}/>
           </div>
           <div className='relative'>
             <label htmlFor="" className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>Password</label>
-            <input type="password" placeholder='Example@123' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none'/>
+            <input type="password" placeholder='Example@123' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={password} onChange={(e)=>SetPassword(e.target.value)}/>
           </div>
-          <button className='bg-blue-700 h-[5rem] w-[48rem] text-white text-3xl rounded-md'>Create a Account</button>
+          <div className='relative'>
+            <label htmlFor="" className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>Confirm Password</label>
+            <input type="password" placeholder='Example@123' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={confirmPassword} onChange={(e)=>SetConfirmPassword(e.target.value)}/>
+          </div>
+          <button className='bg-blue-700 h-[5rem] w-[48rem] text-white text-3xl rounded-md' type='submit'>Create a Account</button>
         </form>
       </div>
 
