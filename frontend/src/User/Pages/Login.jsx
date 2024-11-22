@@ -1,22 +1,33 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 import globalimg from '../../assets/globalpersonimg.png'
 
 const Login = () => {
+  const [name, setName] = useState();
   const [email, SetEmail] = useState();
   const [password, SetPassword] = useState();
   const [confirmPassword, SetConfirmPassword] = useState();
 
-  const ctrateAccount = (e) =>{
+  const ctrateAccount = async (e) =>{
     e.preventDefault();
     if(!strongPassword(password)){
       alert('Password is not strong');
+      return;
     }
     if(password !== confirmPassword){
       alert('Password didn \'t match');
+      return;
 
     }
-    console.log(email);
-    console.log(password);
+    const userData = { name, email, password};
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/job/signup`, userData);
+      console.log(response.data);
+      
+    } catch (error) {
+      console.error('Error creating account:', error.response ? error.response.data : error.message);
+      alert('Error creating account. Please try again.');
+    }
     
   }
 
@@ -31,18 +42,22 @@ const Login = () => {
       <div  className='w-1/2 h-screen bg-white'>
         <h1 className='text-black font-mono text-7xl pl-12 pt-10'>Welcome to Job Finder</h1>
         <p className='text-black font-mono text-base font-light pl-12 pt-5'>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-        <form action=""  className='pl-12 mt-14 flex flex-col relative space-y-20' onSubmit={ctrateAccount}>
-          <div className='relative'>
-            <label htmlFor="" className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>E-mail</label>
-            <input type="email" placeholder='examplaem@gmail.com' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={email} onChange={(e)=>SetEmail(e.target.value)}/>
+        <form className='pl-12 mt-14 flex flex-col relative space-y-20' onSubmit={ctrateAccount}>
+        <div className='relative'>
+            <label className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>Name</label>
+            <input type="text" placeholder='example' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={name} onChange={(e)=>setName(e.target.value)}/>
           </div>
           <div className='relative'>
-            <label htmlFor="" className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>Password</label>
-            <input type="password" placeholder='Example@123' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={password} onChange={(e)=>SetPassword(e.target.value)}/>
+            <label className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>E-mail</label>
+            <input type="email" placeholder='example@gmail.com' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={email} onChange={(e)=>SetEmail(e.target.value)}/>
           </div>
           <div className='relative'>
-            <label htmlFor="" className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>Confirm Password</label>
-            <input type="password" placeholder='Example@123' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={confirmPassword} onChange={(e)=>SetConfirmPassword(e.target.value)}/>
+            <label className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>Password</label>
+            <input type="password" placeholder='example@123' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={password} onChange={(e)=>SetPassword(e.target.value)}/>
+          </div>
+          <div className='relative'>
+            <label className='text-blue-700 absolute left-14 -top-3 bg-white pr-4 pl-4'>Confirm Password</label>
+            <input type="password" placeholder='example@123' className='border-[0.1rem] w-[48rem] h-[4rem] border-blue-700 rounded-xl pl-4 focus:outline-none' value={confirmPassword} onChange={(e)=>SetConfirmPassword(e.target.value)}/>
           </div>
           <button className='bg-blue-700 h-[5rem] w-[48rem] text-white text-3xl rounded-md' type='submit'>Create a Account</button>
         </form>
