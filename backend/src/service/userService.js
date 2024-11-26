@@ -7,11 +7,10 @@ const createUser = async (req,res) => {
         await newUser.save();
         res.status(201).json("User created");
     } catch (error) {
-        res.status(400).json({message: err.message});
+        res.status(400).json({message: error.message});
     }
 };
 
-// Get User
 
 
 module.exports = {createUser};

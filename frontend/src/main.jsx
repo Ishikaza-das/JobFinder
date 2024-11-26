@@ -4,11 +4,13 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Thumbnail from './Pages/Thumbnail.jsx'
-import Login from './User/Pages/Login.jsx'
+import Login from './Auth/Pages/Login.jsx'
+import Signup from './Auth/Pages/Signup.jsx'
 
 const router = createBrowserRouter([
   {path: "/",element:<App/>, children:[
     {path:"/",element:<Thumbnail/>},
+    {path:"/signup",element:<Signup/>},
     {path:"/login",element:<Login/>}
   ]}
 ])
