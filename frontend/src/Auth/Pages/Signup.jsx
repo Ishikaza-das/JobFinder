@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios';
 import Panel from '../Components/Panel';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 
 
 const Signup = () => {
@@ -9,6 +9,7 @@ const Signup = () => {
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
   const [confirmPassword, SetConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const ctrateAccount = async (e) => {
     e.preventDefault();
@@ -23,8 +24,9 @@ const Signup = () => {
 
     const userData = { name, email, password};
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/job/signup`, userData);
-      console.log(response.data);
+      await axios.post(`${import.meta.env.VITE_API_URL}/job/signup`, userData,{withCredentials:true});
+      // console.log(response.data);
+      navigate('/dashboard')
     } catch (error) {
       console.error('Error creating account:', error.response ? error.response.data : error.message);
       alert('Error creating account. Please try again.');
