@@ -9,7 +9,8 @@ pids
 *.seed
 
 # Dependency directories
-node_modules/
+node_modules/ 
+
 
 # Environment variables
 .env

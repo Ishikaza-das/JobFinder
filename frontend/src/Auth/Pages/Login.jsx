@@ -1,13 +1,31 @@
 import { useState } from "react";
 import Panel from "../Components/Panel";
-import { Link } from 'react-router-dom';
+import { Link,  useNavigate} from 'react-router-dom';
+import axios from "axios";
+import GoogleLogin from "../Components/GoogleLogin";
 
 
 const Login = () => {
-
+    const { handelGoogleLogin } = GoogleLogin();
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
+    const navigate = useNavigate();
 
+    const loginAccount = async(e) => {
+      e.preventDefault();
+      if (!email || !password) {
+        alert('Please fill in all fields');
+        return;
+      }
+      const userData = {email, password};
+      try{
+        await axios.post(`${import.meta.env.VITE_API_URL}/job/login`, userData,{withCredentials:true});
+        navigate('/dashboard')
+      }catch(error){
+        console.error('Login error:', error.response?.data?.message);
+        alert(error.response?.data?.message || 'Login failed');
+      }
+    }
     
   return (
       <div className='flex flex-col lg:flex-row min-h-screen'>
@@ -18,7 +36,7 @@ const Login = () => {
           <h1 className='text-black font-mono text-4xl md:text-5xl lg:text-7xl'>Welcome to Job Finder</h1>
           <p className='text-black font-mono text-sm lg:text-base font-light mt-3'>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
         
-          <form className='mt-8 lg:mt-14 flex flex-col space-y-8 lg:space-y-20'>
+          <form className='mt-8 lg:mt-14 flex flex-col space-y-8 lg:space-y-20'  onSubmit={loginAccount}>
             <div className='relative'>
               <label className='text-blue-700 absolute -top-3 left-4 bg-white px-4'>E-mail</label>
                 <input 
@@ -50,7 +68,7 @@ const Login = () => {
             </div>
 
             <div className="flex my-10 justify-around">
-              <button className=" border border-black w-60 h-10 rounded-md hover:border-blue-800 hover:text-blue-800">Google</button>
+              <button className=" border border-black w-60 h-10 rounded-md hover:border-blue-800 hover:text-blue-800" onClick={handelGoogleLogin}>Google</button>
               <button  className=" border border-black w-60 h-10 rounded-md  hover:border-blue-800 hover:text-blue-800">LinkedIn</button>
             </div>
          <h1 className='my-4 text-center '>Don&apos;t have an Account ? <Link to="/signup" className="text-blue-700 hover:underline">Sign up</Link></h1>
