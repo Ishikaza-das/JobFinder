@@ -1,9 +1,10 @@
-// const express = require('express');
+const express = require('express');
+const router = express.Router();
+const {getAllUsers, getUserById, checkAuthStatus} = require('../controller/userController');
 
-// const {createUser} = require('../service/userService');
+router.get('/check', checkAuthStatus);
+router.get('/users', getAllUsers);
+router.get('/users/:id', getUserById);
 
-// const router = express.Router();
 
-// router.post('/signup', createUser);
-
-// module.exports = router
+module.exports = router

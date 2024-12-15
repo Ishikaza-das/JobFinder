@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Navlist from "../store/NavbarList"
-import globalimg from '../../assets/globalpersonimg.png'
-import Userbar from "../../User/components/Userbar";
+import userSvg from '../../assets/user-circle-svgrepo-com.svg'
+import UserCard from "../../User/components/UserCard";
 
 const Navbar = () => {
   const [activeItem, setActiveItem] = useState('Dashboard');
@@ -19,10 +19,10 @@ const Navbar = () => {
     </div>
     <div className="px-4 relative group">
           <div className="rounded-full h-14 w-14 overflow-hidden cursor-pointer">
-            <img className='object-cover h-full w-full' src={globalimg} alt="user"/>
+            <img className='object-cover h-full w-full' src={userSvg} alt="user"/>
           </div>
-          <div className="hidden group-hover:block absolute right-0 w-48 bg-white shadow-lg rounded-md">
-            <Userbar />
+          <div className="hidden group-hover:block absolute right-1 w-48 bg-gray-50 shadow-lg rounded-md">
+            <UserCard />
           </div>
         </div>
     </div>

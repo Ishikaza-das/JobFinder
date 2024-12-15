@@ -26,7 +26,7 @@ const Signup = () => {
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/job/signup`, userData,{withCredentials:true});
       // console.log(response.data);
-      navigate('/dashboard')
+      navigate('/login');
     } catch (error) {
       console.error('Error creating account:', error.response ? error.response.data : error.message);
       alert('Error creating account. Please try again.');

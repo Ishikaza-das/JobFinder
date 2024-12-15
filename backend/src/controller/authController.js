@@ -55,11 +55,17 @@ const loginUser = async(req,res) =>{
     });
     res.status(200).json({
         message: "Login successful",
-        userId: user._id
+        userId: user._id,
+        user: user
     });
   } catch (error) {
     res.status(500).json({message: "Server error"});
   }
 };
 
-module.exports = { signupUser, loginUser};
+const logout = async (req, res) => {
+  res.clearCookie('token');
+  res.status(200).json({ message: 'Logged out successfully' });
+};
+
+module.exports = { signupUser, loginUser, logout};

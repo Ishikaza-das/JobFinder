@@ -3,6 +3,7 @@ import Panel from "../Components/Panel";
 import { Link,  useNavigate} from 'react-router-dom';
 import axios from "axios";
 import GoogleLogin from "../Components/GoogleLogin";
+import { useAuth } from "../store/AuthContext";
 
 
 const Login = () => {
@@ -10,6 +11,7 @@ const Login = () => {
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
     const navigate = useNavigate();
+    const { setUser } = useAuth();
 
     const loginAccount = async(e) => {
       e.preventDefault();
@@ -19,8 +21,15 @@ const Login = () => {
       }
       const userData = {email, password};
       try{
-        await axios.post(`${import.meta.env.VITE_API_URL}/job/login`, userData,{withCredentials:true});
-        navigate('/dashboard')
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/job/login`, userData,{withCredentials:true});
+        if (response.data.userId) {
+          const userResponse = await axios.get(
+              `${import.meta.env.VITE_API_URL}/auth/users/${response.data.userId}`,
+              {withCredentials: true}
+          );
+          setUser(userResponse.data);
+          navigate('/dashboard');
+      }
       }catch(error){
         console.error('Login error:', error.response?.data?.message);
         alert(error.response?.data?.message || 'Login failed');
