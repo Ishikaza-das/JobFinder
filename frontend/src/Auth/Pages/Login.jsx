@@ -4,6 +4,7 @@ import { Link,  useNavigate} from 'react-router-dom';
 import axios from "axios";
 import GoogleLogin from "../Components/GoogleLogin";
 import { useAuth } from "../store/AuthContext";
+import { useToast } from "../../components/ToastContext";
 
 
 const Login = () => {
@@ -12,6 +13,7 @@ const Login = () => {
     const [password, SetPassword] = useState('');
     const navigate = useNavigate();
     const { setUser } = useAuth();
+    const { showToast } = useToast();
 
     const loginAccount = async(e) => {
       e.preventDefault();
@@ -28,11 +30,12 @@ const Login = () => {
               {withCredentials: true}
           );
           setUser(userResponse.data);
+          showToast('Login successful!', 'success')
           navigate('/dashboard');
       }
       }catch(error){
         console.error('Login error:', error.response?.data?.message);
-        alert(error.response?.data?.message || 'Login failed');
+        showToast(error.response?.data?.message || 'Login failed', 'error');
       }
     }
     

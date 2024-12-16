@@ -5,6 +5,7 @@ import Login from './Auth/Pages/Login'
 import Signup from './Auth/Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import { AuthProvider } from './Auth/store/AuthContext'
+import { ToastProvider } from './components/ToastContext'
 
 const GoogleAuthWrapper = () => {
   return (
@@ -35,9 +36,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AuthProvider>
-    <RouterProvider router={router}/>
-    </AuthProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <RouterProvider router={router}/>
+      </AuthProvider>
+    </ToastProvider>
   )
 }
 

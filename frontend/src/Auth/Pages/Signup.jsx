@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import Panel from '../Components/Panel';
 import { Link, useNavigate} from 'react-router-dom'
+import { useToast } from '../../components/ToastContext';
 
 
 const Signup = () => {
@@ -10,15 +11,16 @@ const Signup = () => {
   const [password, SetPassword] = useState('');
   const [confirmPassword, SetConfirmPassword] = useState('');
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const ctrateAccount = async (e) => {
     e.preventDefault();
     if(!strongPassword(password)){
-      alert('Password is not strong');
+      showToast('Password is not strong');
       return;
     }
     if(password !== confirmPassword){
-      alert('Password didn\'t match');
+      showToast('Password didn\'t match');
       return;
     }
 
@@ -27,9 +29,10 @@ const Signup = () => {
       await axios.post(`${import.meta.env.VITE_API_URL}/job/signup`, userData,{withCredentials:true});
       // console.log(response.data);
       navigate('/login');
+      showToast('Signup successful!', 'success')
     } catch (error) {
       console.error('Error creating account:', error.response ? error.response.data : error.message);
-      alert('Error creating account. Please try again.');
+      showToast(error.response?.data?.message || 'Signup failed', 'error');
     }
   }
 

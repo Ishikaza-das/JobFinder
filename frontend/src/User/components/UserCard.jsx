@@ -1,10 +1,12 @@
 import { useAuth } from "../../Auth/store/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useToast } from "../../components/ToastContext";
 
 const UserCard = () => {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleLogout = async () => {
     try {
@@ -14,10 +16,11 @@ const UserCard = () => {
         { withCredentials: true }
       );
       setUser(null);
+      showToast('Loged Out','info')
       navigate('/login');
     } catch (error) {
       console.error('Logout failed:', error.response?.data?.message || 'Something went wrong');
-      alert('Logout failed. Please try again.');
+      showToast(error.response?.data?.message || 'Logout failed', 'error');
     }
   };
 
