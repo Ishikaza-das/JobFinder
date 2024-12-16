@@ -15,12 +15,12 @@ function GoogleLogin() {
                 const result = await googleAuth(authResult['code']);
                 setUser(result.data.user);
                 console.log("UserName", result.data.user);
-                showToast('Login successful!', 'success')
+                showToast('Login successful !', 'success')
                 navigate('/dashboard');
             }
         } catch (error) {
             console.log("Error while requesting google code", error);
-            showToast(error.response?.data?.message || 'Login failed', 'error');
+            showToast(error.response?.data?.message || 'Login failed !', 'error');
         }
     }
 

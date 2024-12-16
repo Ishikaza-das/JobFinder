@@ -21,7 +21,7 @@ const Navbar = () => {
           <div className="rounded-full h-14 w-14 overflow-hidden cursor-pointer">
             <img className='object-cover h-full w-full' src={userSvg} alt="user"/>
           </div>
-          <div className="hidden group-hover:block absolute right-1 w-48 bg-gray-50 shadow-lg rounded-md">
+          <div className="hidden group-hover:block absolute right-1 w-48 h-36 bg-gray-50 shadow-lg rounded-md px-2">
             <UserCard />
           </div>
         </div>
