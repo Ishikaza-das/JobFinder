@@ -3,6 +3,7 @@ import axios from 'axios';
 import Panel from '../Components/Panel';
 import { Link, useNavigate} from 'react-router-dom'
 import { useToast } from '../../components/ToastContext';
+import GoogleLogin from '../Components/GoogleLogin';
 
 
 const Signup = () => {
@@ -12,6 +13,7 @@ const Signup = () => {
   const [confirmPassword, SetConfirmPassword] = useState('');
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { handelGoogleLogin } = GoogleLogin();
 
   const ctrateAccount = async (e) => {
     e.preventDefault();
@@ -103,7 +105,7 @@ const Signup = () => {
         <div className="flex-grow border-t border-black"></div>
         </div>
         <div className="flex my-10 justify-around">
-            <button className=" border border-black w-60 h-10 rounded-md hover:border-blue-800 hover:text-blue-800">Google</button>
+            <button className=" border border-black w-60 h-10 rounded-md hover:border-blue-800 hover:text-blue-800" onClick={handelGoogleLogin}>Google</button>
             <button  className=" border border-black w-60 h-10 rounded-md  hover:border-blue-800 hover:text-blue-800">LinkedIn</button>
         </div>
         <h1 className='my-4 text-center '>Aleardy have an Account ? <Link to="/login" className="text-blue-700 hover:underline">Login</Link></h1>

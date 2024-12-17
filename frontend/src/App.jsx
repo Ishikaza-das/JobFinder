@@ -9,10 +9,10 @@ import { ToastProvider } from './components/ToastContext'
 import { ProtectedRoute, PublicRoute } from "./Auth/Components/ProtectedRoute"
 
 
-const GoogleAuthWrapper = () => {
+const GoogleAuthWrapper = ({ Component }) => {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <Login/>
+      <Component />
     </GoogleOAuthProvider>
   )
 }
@@ -24,15 +24,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <PublicRoute><Signup/></PublicRoute>
+    element: <PublicRoute>
+      <GoogleAuthWrapper Component={Signup} />
+    </PublicRoute>
   },
   {
     path: "/login",
-    element: <PublicRoute><GoogleAuthWrapper/></PublicRoute>
+    element: <PublicRoute>
+      <GoogleAuthWrapper Component={Login} />
+    </PublicRoute>
   },
   {
     path: "/dashboard",
-    element:  <ProtectedRoute><Dashboard/></ProtectedRoute>
+    element: <ProtectedRoute>
+      <Dashboard/>
+    </ProtectedRoute>
   }
 ])
 
