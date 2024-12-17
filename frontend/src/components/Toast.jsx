@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const Toast = ({ message, type = 'error', duration = 3000, onClose }) => {
+const Toast = ({ message, type = 'error', duration = 1000, onClose }) => {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {

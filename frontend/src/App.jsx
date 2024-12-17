@@ -6,6 +6,8 @@ import Signup from './Auth/Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import { AuthProvider } from './Auth/store/AuthContext'
 import { ToastProvider } from './components/ToastContext'
+import { ProtectedRoute, PublicRoute } from "./Auth/Components/ProtectedRoute"
+
 
 const GoogleAuthWrapper = () => {
   return (
@@ -22,15 +24,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <Signup/>
+    element: <PublicRoute><Signup/></PublicRoute>
   },
   {
     path: "/login",
-    element: <GoogleAuthWrapper/>
+    element: <PublicRoute><GoogleAuthWrapper/></PublicRoute>
   },
   {
     path: "/dashboard",
-    element: <Dashboard/>
+    element:  <ProtectedRoute><Dashboard/></ProtectedRoute>
   }
 ])
 
