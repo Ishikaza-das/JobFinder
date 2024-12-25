@@ -1,0 +1,27 @@
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  pointer-events: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -4px;
+  z-index: 30;
+}
+
+input[type="range"]::-moz-range-thumb {
+  pointer-events: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: none;
+  z-index: 30;
+}

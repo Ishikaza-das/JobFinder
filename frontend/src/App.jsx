@@ -7,6 +7,7 @@ import Dashboard from './Pages/Dashboard'
 import { AuthProvider } from './Auth/store/AuthContext'
 import { ToastProvider } from './components/ToastContext'
 import { ProtectedRoute, PublicRoute } from "./Auth/Components/ProtectedRoute"
+import Job from './Pages/Job'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
     element: <ProtectedRoute>
       <Dashboard/>
     </ProtectedRoute>
+  },
+  {
+    path: "/jobs",
+    element: <Job/>
   }
 ])
 
