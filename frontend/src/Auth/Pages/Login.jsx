@@ -8,7 +8,7 @@ import { useToast } from "../../components/ToastContext";
 
 
 const Login = () => {
-    const { handelGoogleLogin } = GoogleLogin();
+  const { handleGoogleLogin } = GoogleLogin();
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
     const navigate = useNavigate();
@@ -80,7 +80,7 @@ const Login = () => {
             </div>
 
             <div className="flex my-10 justify-around">
-              <button className=" border border-black w-60 h-10 rounded-md hover:border-blue-800 hover:text-blue-800" onClick={handelGoogleLogin}>Google</button>
+              <button className=" border border-black w-60 h-10 rounded-md hover:border-blue-800 hover:text-blue-800" onClick={handleGoogleLogin}>Google</button>
               <button  className=" border border-black w-60 h-10 rounded-md  hover:border-blue-800 hover:text-blue-800">LinkedIn</button>
             </div>
          <h1 className='my-4 text-center '>Don&apos;t have an Account ? <Link to="/signup" className="text-blue-700 hover:underline">Sign up</Link></h1>

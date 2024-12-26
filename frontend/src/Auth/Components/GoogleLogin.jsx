@@ -1,47 +1,52 @@
-import { useGoogleLogin } from '@react-oauth/google';
-import { googleAuth } from '../api/GoogleApi';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 import { useToast } from '../../components/ToastContext';
-import axios from "axios";
+import { useEffect } from 'react';
+import { getGoogleAuthUrl, handleGoogleCallback } from '../api/GoogleApi';
 
-function GoogleLogin() {
+const GoogleLogin = () => {
     const navigate = useNavigate();
-    const { setUser, checkAuthStatus } = useAuth();
+    const { setUser } = useAuth();
     const { showToast } = useToast();
-
-    const responseGoogle = async(authResult) => {
-        try {
-            if(authResult['code']) {
-                // Get initial response from Google Auth
-                const result = await googleAuth(authResult['code']);
-                
-                // Verify authentication status
-                const isAuthenticated = await checkAuthStatus();
-                
-                if (isAuthenticated) {
-                    setUser(result.data.user);
-                    showToast('Login successful!', 'success');
-                    navigate('/dashboard');
-                }
-            }
-        } catch (error) {
-            console.log("Error during Google authentication:", error);
-            showToast('Login failed!', 'error');
+  
+    useEffect(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      
+      if (code) {
+        processGoogleCallback(code);
+      }
+    }, []);
+  
+    const processGoogleCallback = async (code) => {
+      try {
+        const response = await handleGoogleCallback(code);
+        if (response.data.user) {
+          setUser(response.data.user);
+          showToast('Login successful!', 'success');
+          window.history.replaceState({}, '', '/dashboard');
+          navigate('/dashboard', { replace: true });
         }
-    }
-
-    const handelGoogleLogin = useGoogleLogin({
-        onSuccess: responseGoogle,
-        onError: (error) => {
-            console.log("Google login error:", error);
-            showToast('Google login failed', 'error');
-        },
-        flow: 'auth-code'
-    });
-
-    return { handelGoogleLogin };
-}
-
+      } catch (error) {
+        console.error('Google callback error:', error);
+        showToast('Google login failed', 'error');
+        navigate('/login');
+      }
+    };
+  
+    const handleGoogleLogin = async () => {
+      try {
+        const response = await getGoogleAuthUrl();
+        if (response.data.url) {
+          window.location.href = response.data.url;
+        }
+      } catch (error) {
+        console.error('Google login error:', error);
+        showToast('Google login failed', 'error');
+      }
+    };
+  
+    return { handleGoogleLogin };
+};
 
 export default GoogleLogin;

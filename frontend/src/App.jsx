@@ -8,6 +8,7 @@ import { AuthProvider } from './Auth/store/AuthContext'
 import { ToastProvider } from './components/ToastContext'
 import { ProtectedRoute, PublicRoute } from "./Auth/Components/ProtectedRoute"
 import Job from './Pages/Job'
+import GoogleLogin from './Auth/Components/GoogleLogin'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -43,7 +44,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/jobs",
-    element: <Job/>
+    element: <ProtectedRoute>
+      <Job/>
+    </ProtectedRoute>
   }
 ])
 

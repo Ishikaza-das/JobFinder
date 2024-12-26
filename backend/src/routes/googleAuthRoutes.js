@@ -1,9 +1,12 @@
 const express = require('express');
-const { googleAuth } = require('../controller/googleAuthController');
 const router = express.Router();
+const googleAuthController = require('../controller/googleAuthController');
+const validateToken = require('../middleware/tokenValidation');
 
-// router.get();
+router.get('/google', googleAuthController.getGoogleAuthUrl);
+router.get('/google/callback', googleAuthController.googleCallback);
+router.get('/verify', validateToken, (req, res) => {
+  res.json({ user: req.user });
+});
 
-router.get('/google',googleAuth);
-
-module.exports = router
+module.exports = router;

@@ -1,57 +1,83 @@
-const { oauth2client } = require("../utils/googleConfig");
-const axios = require("axios");
-const User = require("../models/user");
-const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require('google-auth-library');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
-const googleAuth = async (req, res) => {
-  try {
-      const { code } = req.query;
-      const googleRes = await oauth2client.getToken(code);
-      oauth2client.setCredentials(googleRes.tokens);
+const client = new OAuth2Client(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_REDIRECT_URI
+);
 
-      const userRes = await axios.get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
-      );
-      
-      const { email, name, picture } = userRes.data;
+const googleAuthController = {
+  getGoogleAuthUrl: async (req, res) => {
+    const url = client.generateAuthUrl({
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+      access_type: 'offline',
+      prompt: 'consent',
+      scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+      ]
+    });
+    res.json({ url });
+  },
+
+  googleCallback: async (req, res) => {
+    try {
+      const code = req.query.code;
+      const { tokens } = await client.getToken(code);
+      const ticket = await client.verifyIdToken({
+        idToken: tokens.id_token,
+        audience: process.env.GOOGLE_CLIENT_ID
+      });
+  
+      const { email, name, picture, sub: googleId } = ticket.getPayload();
+  
       let user = await User.findOne({ email });
-      
+  
       if (!user) {
-          user = await User.create({ 
-              email, 
-              name, 
-              image: picture,
-              isGoogleUser: true,
-              googleId: userRes.data.sub 
-          });
+        user = await User.create({
+          email,
+          name,
+          image: picture,
+          isGoogleUser: true,
+          googleId
+        });
+      } else {
+        user.isGoogleUser = true;
+        user.googleId = googleId;
+        user.image = picture;
+        await user.save();
       }
-
+  
       const token = jwt.sign(
-          // { userId: user._id, email }, 
-          { userId: user._id },
-          process.env.SECRET_KEY,
-          { expiresIn: "24h" }
+        { userId: user._id, email: user.email },
+        process.env.SECRET_KEY,
+        { expiresIn: '24h' }
       );
-
+  
       res.cookie('token', token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          secure: false,
-          sameSite: 'lax',
-          maxAge: 24 * 60 * 60 * 1000,
-          path:'/',
-          domain: process.env.COOKIE_DOMAIN || undefined
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 * 1000
       });
+      // res.status(200).json({
+      //   user: {
+      //     userId: user._id,
+      //     name: user.name,
+      //     email: user.email,
+      //     image: user.image
+      //   },
+      //   success: true
+      // });
+      res.redirect(`${process.env.FRONTEND}/dashboard`);
 
-      return res.status(200).json({
-          message: 'Success',
-          user
-      });
-  } catch (error) {
-      res.status(500).json({
-          message: 'Internal Server Error'
-      });
+    } catch (error) {
+      console.error('Google auth error:', error);
+      res.status(500).json({ success: false, message: 'Authentication failed' });
+    }
   }
-};
+}  
 
-module.exports = { googleAuth };
+module.exports = googleAuthController;

@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Check auth status on mount and when token changes
     useEffect(() => {
         const verifyAuth = async () => {
             await checkAuthStatus();
