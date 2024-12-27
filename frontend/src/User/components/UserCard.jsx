@@ -24,12 +24,16 @@ const UserCard = () => {
     }
   };
 
+  const NavProfile = () => {
+    navigate('/profile');
+  }
+
   return (
     <div className="py-2">
       <div className="px-4 py-2 font-medium text-center">
         {user?.name}
       </div>
-      <button className="w-full text-left px-4 py-2 hover:bg-blue-600 rounded-lg">Profile</button>
+      <button className="w-full text-left px-4 py-2 hover:bg-blue-600 rounded-lg" onClick={NavProfile}>Profile</button>
       <button 
         className="w-full text-left px-4 py-2 hover:bg-blue-600 rounded-lg"
         onClick={handleLogout}
