@@ -12,17 +12,27 @@ const getAllUsers = async (req,res) => {
     }
 }
 
-const getUserById = async (req,res) => {
+const getUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
-        if(!user){
+        const userId = req.user.userId;
+        const user = await User.findById(userId).select('-password');
+        
+        if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        res.status(200).json(user);
+
+        res.status(200).json({
+            success: true,
+            user
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({
+            success: false,
+            message: "Error fetching profile",
+            error: error.message
+        });
     }
-}
+};
 
 const checkAuthStatus = async (req, res) => {
   try {
@@ -45,4 +55,33 @@ const checkAuthStatus = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, getUserById, checkAuthStatus };
+const updateUser = async (req, res) => {
+    const userId = req.user.userId;
+    const currentUser = await User.findById(userId);
+
+    const updateData = {
+        name: req.body.name || currentUser.name,
+        email: req.body.email || currentUser.email,
+        mobileno: req.body.mobileno || currentUser.mobileno,
+        address: req.body.address || currentUser.address,
+        country: req.body.country || currentUser.country,
+        state: req.body.state || currentUser.state
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $set: updateData },
+        { new: true, runValidators: true }
+    );
+
+    res.status(200).json({
+        success: true,
+        message: "Profile updated successfully",
+        user: updatedUser
+    });
+};
+
+
+
+
+module.exports = { getAllUsers, getUserProfile, checkAuthStatus, updateUser};
