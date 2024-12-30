@@ -5,8 +5,8 @@ import thumbnail2 from './assets/Thumbnail2.png'
 export default function Thumbnail() {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/login');
+  const handleNavigate = (destination) => {
+    navigate(destination);
   }  
 
   return (
@@ -33,10 +33,16 @@ export default function Thumbnail() {
         </div>
 
         <button 
-          onClick={handleNavigate} 
+          onClick={() => handleNavigate('/login')} 
           className='bg-black text-white h-[3rem] m-4 sm:m-10 w-[9rem] rounded-3xl font-serif hover:bg-gray-800 transition-colors'
         >
-          Login
+          Hire Me
+        </button>
+        <button 
+          className='bg-black text-white h-[3rem] m-4 sm:m-10 w-[9rem] rounded-3xl font-serif hover:bg-gray-800 transition-colors'
+          onClick={() => handleNavigate('/post-job/signup')}
+        >
+          Post a Job
         </button>
       </div>  
     </>

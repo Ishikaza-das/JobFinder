@@ -10,6 +10,8 @@ import { ProtectedRoute, PublicRoute } from "./Auth/Components/ProtectedRoute"
 import Job from './Pages/Job'
 // import GoogleLogin from './Auth/Components/GoogleLogin'
 import Profile from './User/pages/Profile'
+import CompanySignup from './Auth/Pages/CompanySignup'
+import CompanyLogin from './Auth/Pages/CompanyLogin'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -54,7 +56,19 @@ const router = createBrowserRouter([
     element: <ProtectedRoute>
       <Profile/>
     </ProtectedRoute>
-  }
+  },
+  {
+    path:"/post-job/signup",
+    element:<PublicRoute>
+      <CompanySignup/>
+    </PublicRoute>
+  },
+  {
+    path:"/post-job/login",
+    element:<PublicRoute>
+      <CompanyLogin/>
+    </PublicRoute>
+  },
 ])
 
 function App() {
