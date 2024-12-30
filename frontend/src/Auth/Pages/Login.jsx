@@ -5,6 +5,7 @@ import axios from "axios";
 import GoogleLogin from "../Components/GoogleLogin";
 import { useAuth } from "../store/AuthContext";
 import { useToast } from "../../components/ToastContext";
+import back from '../../assets/back.svg'
 
 
 const Login = () => {
@@ -38,9 +39,21 @@ const Login = () => {
         showToast(error.response?.data?.message || 'Login failed', 'error');
       }
     }
+    const onBack = () =>{
+      navigate('/');
+    }
     
   return (
-      <div className='flex flex-col lg:flex-row min-h-screen'>
+      <div className='flex flex-col lg:flex-row min-h-screen relative'>
+        <div className='absolute top-6 left-6 sm:top-12 sm:left-12 z-10'>
+          <button className='bg-black text-white h-12 w-12 rounded-full font-serif hover:bg-gray-800 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-110' onClick={onBack}>
+              <img 
+                  className='object-cover h-6 w-6' 
+                  src={back} 
+                  alt="Back"
+              />
+          </button>
+          </div>
         {/* Left side */}
         <Panel/>
         {/* Right side */}
