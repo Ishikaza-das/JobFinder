@@ -7,6 +7,7 @@ const companySchema = new mongoose.Schema({
     password: {type: String},
     website: {type: String},
     address: {type: String},
+    location: {type: String},
     phone: {type: String},
     verified: {type: Boolean, default: false}
 });

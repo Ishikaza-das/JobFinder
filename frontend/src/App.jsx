@@ -12,6 +12,7 @@ import Job from './Pages/Job'
 import Profile from './User/pages/Profile'
 import CompanySignup from './Auth/Pages/CompanySignup'
 import CompanyLogin from './Auth/Pages/CompanyLogin'
+import CompanyDetails from './Auth/Pages/CompanyDetails'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -67,6 +68,12 @@ const router = createBrowserRouter([
     path:"/post-job/login",
     element:<PublicRoute>
       <CompanyLogin/>
+    </PublicRoute>
+  },
+  {
+    path:"/post-job/details",
+    element:<PublicRoute>
+      <CompanyDetails/>
     </PublicRoute>
   },
 ])

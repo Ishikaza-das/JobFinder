@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const signupCompany = async (req,res) => {
     try {
-        const {name, companyname, email, password, website, address, phone} = req.body;
+        const {name, companyname, email, password} = req.body;
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newCompany = new Comapany({...req.body, password: hashedPassword});
         await newCompany.save();
@@ -35,4 +35,28 @@ const signupCompany = async (req,res) => {
     }
 }
 
-module.exports = {signupCompany};
+const updateCompanyDetails = async(req,res) => {
+    try {
+        const { website, address, location, phone } = req.body;
+        const companyId = req.company.id;
+
+         await Comapany.findByIdAndUpdate(
+            companyId,
+            {
+                location: location,
+                website: website,
+                address: address,
+                phone: phone
+            },
+            { new: true }
+        );
+        res.status(200).json({
+            success: true,
+            message: "Company details updated successfully"
+        });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+module.exports = {signupCompany, updateCompanyDetails};
