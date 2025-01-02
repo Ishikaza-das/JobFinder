@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const signupCompany = async (req,res) => {
     try {
-        const {name, email, password, website, address, phone} = req.body;
+        const {name, companyname, email, password, website, address, phone} = req.body;
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newCompany = new Comapany({...req.body, password: hashedPassword});
         await newCompany.save();
@@ -24,11 +24,11 @@ const signupCompany = async (req,res) => {
         res.status(201).json({
             success: true,
             message: "Company registered successfully",
-            company: {
-                id: newCompany._id,
-                name: newCompany.name,
-                email: newCompany.email
-            }
+            // company: {
+            //     id: newCompany._id,
+            //     name: newCompany.name,
+            //     email: newCompany.email
+            // }
         });
     } catch (error) {
         res.status(400).json({ message: error.message });
