@@ -39,7 +39,7 @@ Welcome to the Job Searching Website! This platform serves as a bridge between j
 - cd job-searching-website
 
 **Backend Setup:**
-- cd backend
+- cd ../backend
 - npm install
 
 **Frontend Setup:**
