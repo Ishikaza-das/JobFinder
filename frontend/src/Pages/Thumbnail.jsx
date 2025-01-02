@@ -40,7 +40,7 @@ export default function Thumbnail() {
         </button>
         <button 
           className='bg-black text-white h-[3rem] m-4 sm:m-10 w-[9rem] rounded-3xl font-serif hover:bg-gray-800 transition-colors'
-          onClick={() => handleNavigate('/post-job/signup')}
+          onClick={() => handleNavigate('/post-job/login')}
         >
           Post a Job
         </button>
