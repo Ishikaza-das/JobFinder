@@ -1,8 +1,9 @@
-🏢 **Job Searching Website**
-Welcome to the Job Searching Website! This platform serves as a bridge between job seekers and companies. Job seekers can explore opportunities, upload resumes, and apply for jobs, while companies can post job openings and manage applicants effectively.
-**------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------**
+#🏢 **Job Searching Website**
 
-🌟 **Features**
+## Overview
+Welcome to the Job Searching Website! This platform serves as a bridge between job seekers and companies. Job seekers can explore opportunities, upload resumes, and apply for jobs, while companies can post job openings and manage applicants effectively.
+
+## 🌟Features
 
 👨‍💻**For Job Seekers:**
 - 🔍 Browse Jobs: Explore a wide range of job openings across various industries and locations.
@@ -23,9 +24,8 @@ Welcome to the Job Searching Website! This platform serves as a bridge between j
 - 🔒 Authentication: Secure login and signup for both job seekers and companies.
 - 📱 Responsive Design: User-friendly interface optimized for desktop and mobile devices.
 - 🔗 Integration: Support for third-party integrations like LinkedIn, Google Calendar, and email notifications.
-**------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------**
 
-🚀 **Getting Started**
+## 🚀Getting Started
 
 **Prerequisites**
 - Node.js and npm
@@ -57,9 +57,8 @@ Welcome to the Job Searching Website! This platform serves as a bridge between j
 **Run Frontend:**
 - cd ../frontend
 - npm run dev
-**------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------**
 
-🛠️ **Technologies Used**
+## 🛠️ Technologies Used
 
 **Frontend:**
 - ⚛️ React.js
@@ -73,9 +72,8 @@ Welcome to the Job Searching Website! This platform serves as a bridge between j
 **Additional Tools:**
 - 🔑 JWT for secure token-based authentication
 - 🔒 Bcrypt.js for password encryption
-**------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------**
 
-📋 **Usage**
+## 📋 Usage
 
 **For Job Seekers:**
 - Sign up and create your profile.
