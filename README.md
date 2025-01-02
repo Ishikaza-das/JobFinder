@@ -68,7 +68,7 @@ Welcome to the Job Searching Website! This platform serves as a bridge between j
 - 🟢 Node.js
 - 🚀 Express.js
 - 📦 MongoDB with Mongoose
-- 
+
 **Additional Tools:**
 - 🔑 JWT for secure token-based authentication
 - 🔒 Bcrypt.js for password encryption
