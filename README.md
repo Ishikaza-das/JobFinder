@@ -1,4 +1,4 @@
-# 🏢 **Job Searching Website**
+# 🏢 Job Searching Website
 
 ## Overview
 Welcome to the Job Searching Website! This platform serves as a bridge between job seekers and companies. Job seekers can explore opportunities, upload resumes, and apply for jobs, while companies can post job openings and manage applicants effectively.
