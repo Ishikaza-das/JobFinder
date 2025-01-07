@@ -13,6 +13,7 @@ import Profile from './User/pages/Profile'
 import CompanySignup from './Auth/Pages/CompanySignup'
 import CompanyLogin from './Auth/Pages/CompanyLogin'
 import CompanyDetails from './Auth/Pages/CompanyDetails'
+import ValidateEmail from './Auth/Components/ValidateEmail'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -72,10 +73,16 @@ const router = createBrowserRouter([
   },
   {
     path:"/post-job/details",
-    element:<PublicRoute>
+    element:<ProtectedRoute>
       <CompanyDetails/>
-    </PublicRoute>
+    </ProtectedRoute>
   },
+  {
+    path:"/post-job/validate",
+    element:<ProtectedRoute>
+      <ValidateEmail/>
+    </ProtectedRoute>
+  }
 ])
 
 function App() {

@@ -3,6 +3,7 @@ import PostPanel from '../Components/PostPanel';
 import { useState } from 'react';
 import { useToast } from '../../components/ToastContext';
 import axios from 'axios';
+import ValidateEmail from '../Components/ValidateEmail';
 
 const CompanySignup = () => {
   const [companyname, setCompanyName] = useState();
@@ -12,6 +13,12 @@ const CompanySignup = () => {
   const [confirmPassword, setConfirmPassword] = useState();
   const {showToast} = useToast();
   const navigate = useNavigate();
+  const [showValidation, setShowValidation] = useState(false); 
+
+  const handleClose = () => {
+    setShowValidation(false);
+    navigate('/post-job/details',{ replace: true });
+  };
 
   const createCompanyAccount = async (e) =>{
     e.preventDefault();
@@ -26,7 +33,7 @@ const CompanySignup = () => {
     const companyData = {companyname, name, email, password};
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/post-job/signup`,companyData,{withCredentials:true});
-      navigate('/post-job/details');
+      setShowValidation(true);
     } catch (error) {
       console.error('Error creating account:', error.response ? error.response.data : error.message);
       showToast(error.response?.data?.message || 'Signup failed', 'error');
@@ -103,6 +110,8 @@ const CompanySignup = () => {
           <button className='bg-blue-700 h-12 lg:h-[5rem] w-full text-white text-xl lg:text-3xl rounded-md hover:bg-blue-800 transition-colors' type='submit'>
             Create a Account
           </button>
+
+          {showValidation && <ValidateEmail onClose={handleClose} />}
         </form>
          <h1 className='my-6 text-center '>Aleardy have an Account ? <Link to="/post-job/login" className="text-blue-700 hover:underline">Login</Link></h1>
       </div>
