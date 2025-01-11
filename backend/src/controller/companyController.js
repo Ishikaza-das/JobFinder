@@ -1,32 +1,64 @@
 const Comapany = require('../models/company');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { sendVerificationEmail } = require('../middleware/emailValidation');
 
 
 const signupCompany = async (req,res) => {
     try {
         const {name, companyname, email, password} = req.body;
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const pin = await sendVerificationEmail(email);
         const newCompany = new Comapany({...req.body, password: hashedPassword});
         await newCompany.save();
-        const token = jwt.sign(
-            { companyId: newCompany._id },
-            process.env.SECRET_KEY,
-            { expiresIn: '24h' }
-        );
-
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000
-        });
-
         res.status(201).json({
             success: true,
-            message: "Company registered successfully",
+            message: "Company registered successfully. Check your email for verification PIN.",
+            pin: pin
         });
     } catch (error) {
         res.status(400).json({ message: error.message });
+    }
+}
+
+const verifyEmail = async (req,res) => {
+    try {
+        const {email, pin} = req.body;
+        const verification = await Comapany.findOne({email});
+        if (!verification) {
+            return res.status(404).json({
+                success: false,
+                message: "Company not found"
+            });
+        }
+        const storedPin = pin;
+        if (pin !== storedPin) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid PIN"
+            });
+        }
+        verification.verified = true;
+        await verification.save();
+        const token = jwt.sign(
+            { companyId: verification._id },
+            process.env.SECRET_KEY,
+            { expiresIn: '24h' }
+          );
+      
+          res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 24 * 60 * 60 * 1000
+          });
+      
+          res.status(200).json({
+            success: true,
+            message: "Email verified successfully"
+          });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -89,4 +121,4 @@ const loginCompany = async (req,res) => {
     }
 }
 
-module.exports = {signupCompany, updateCompanyDetails, loginCompany};
+module.exports = {signupCompany, updateCompanyDetails, loginCompany, verifyEmail};
