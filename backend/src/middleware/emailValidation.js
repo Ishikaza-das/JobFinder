@@ -9,20 +9,20 @@ const transport = nodemailer.createTransport({
 });
 
 const sendVerificationEmail = async (email) => {
-    const pin = Math.floor(100000 + Math.random()*900000);
+    const pin = Math.floor(100000 + Math.random()*900000).toString();
 
-    const sendMail = await transport.sendMail({
+    const mailOptions = {
         from: '"Team Job Finder 👥" <jf@gmail.com>',
         to: email,
         subject: "Verification",
-        html:`html: 
-      <h1>Welcome to Job Finder!</h1>
-      <p>Your verification PIN is: <strong>${pin}</strong></p>
-      <p>This PIN will expire in 10 minutes.</p>
-    `
-    });
+        html: `
+            <h1>Welcome to Job Finder!</h1>
+            <p>Your verification PIN is: <strong>${pin}</strong></p>
+            <p>This PIN will expire in 10 minutes.</p>
+        `
+    };
 
-    await transport.sendMail(sendMail);
+    await transport.sendMail(mailOptions);
     return pin;
 }
 

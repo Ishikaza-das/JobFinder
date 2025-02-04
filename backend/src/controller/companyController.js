@@ -2,19 +2,34 @@ const Comapany = require('../models/company');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { sendVerificationEmail } = require('../middleware/emailValidation');
+const Company = require('../models/company');
 
+const pendingRegistrations = new Map();
 
 const signupCompany = async (req,res) => {
     try {
         const {name, companyname, email, password} = req.body;
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const existingCompany = await Comapany.findOne({ email });
+        if(existingCompany){
+            return res.status(400).json({
+                success: false,
+                message: "Email already registered"
+            });
+        }
+        const hashedPassword = await bcrypt.hash(password,10);
         const pin = await sendVerificationEmail(email);
-        const newCompany = new Comapany({...req.body, password: hashedPassword});
-        await newCompany.save();
-        res.status(201).json({
+        console.log('Generated PIN:', pin);
+        
+        pendingRegistrations.set(email, {
+            name,
+            companyname,
+            email,
+            password: hashedPassword,
+            pin
+        });
+        res.status(200).json({
             success: true,
-            message: "Company registered successfully. Check your email for verification PIN.",
-            pin: pin
+            message: "Please verify your email with PIN sent to your inbox",
         });
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -24,39 +39,43 @@ const signupCompany = async (req,res) => {
 const verifyEmail = async (req,res) => {
     try {
         const {email, pin} = req.body;
-        const verification = await Comapany.findOne({email});
-        if (!verification) {
+        const pendingRegistration = pendingRegistrations.get(email);
+
+        if(!pendingRegistration){
             return res.status(404).json({
                 success: false,
-                message: "Company not found"
+                message: "Registration not found or expired"
             });
         }
-        const storedPin = pin;
-        if (pin !== storedPin) {
+        if(pin.toString() !== pendingRegistration.pin.toString()){
             return res.status(400).json({
                 success: false,
                 message: "Invalid PIN"
             });
         }
-        verification.verified = true;
-        await verification.save();
-        const token = jwt.sign(
-            { companyId: verification._id },
-            process.env.SECRET_KEY,
-            { expiresIn: '24h' }
-          );
-      
-          res.cookie('token', token, {
+
+        const newComapany = new Company({
+            name: pendingRegistration.name,
+            companyname: pendingRegistration.companyname,
+            email: pendingRegistration.email,
+            password: pendingRegistration.password,
+            verified: true
+        });
+
+        await newComapany.save();
+        pendingRegistrations.delete(email);
+
+        const token = jwt.sign({companyId: newComapany._id},process.env.SECRET_KEY,{expiresIn: '24h'});
+
+        res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 24 * 60 * 60 * 1000
-          });
-      
-          res.status(200).json({
+        });
+        res.status(201).json({
             success: true,
-            message: "Email verified successfully"
-          });
-
+            message: "Company registered & verified successfully"
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -94,6 +113,11 @@ const loginCompany = async (req,res) => {
         if(!companyUser){
             res.status(400).json({
                 message: "User not found"
+            });
+        };
+        if(!companyUser.verified){
+            res.status(400).json({
+                message: "Please verify your email first"
             });
         };
         const isValidPassword = await bcrypt.compare(password, companyUser.password);
