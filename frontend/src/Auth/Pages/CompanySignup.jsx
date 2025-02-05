@@ -27,6 +27,7 @@ const CompanySignup = () => {
     const companyData = {companyname, name, email, password};
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/post-job/signup`,companyData,{withCredentials:true});
+      localStorage.setItem('tempEmail',email);
       navigate('/post-job/validate');
     } catch (error) {
       console.error('Error creating account:', error.response ? error.response.data : error.message);
