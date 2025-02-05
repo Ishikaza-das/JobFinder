@@ -10,3 +10,7 @@ export const PublicRoute = ({ children }) => {
     const { user } = useAuth();
     return !user ? children : <Navigate to="/dashboard" />;
 };
+
+export const ValidationRoute = ({ children }) => {
+    return children;
+}

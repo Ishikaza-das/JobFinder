@@ -6,7 +6,7 @@ import Signup from './Auth/Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import { AuthProvider } from './Auth/store/AuthContext'
 import { ToastProvider } from './components/ToastContext'
-import { ProtectedRoute, PublicRoute } from "./Auth/Components/ProtectedRoute"
+import { ProtectedRoute, PublicRoute, ValidationRoute } from "./Auth/Components/ProtectedRoute"
 import Job from './Pages/Job'
 // import GoogleLogin from './Auth/Components/GoogleLogin'
 import Profile from './User/pages/Profile'
@@ -79,9 +79,9 @@ const router = createBrowserRouter([
   },
   {
     path:"/post-job/validate",
-    element:<ProtectedRoute>
+    element:<ValidationRoute>
       <ValidateEmail/>
-    </ProtectedRoute>
+    </ValidationRoute>
   }
 ])
 
