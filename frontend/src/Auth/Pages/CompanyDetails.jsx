@@ -23,10 +23,12 @@ const CompanyDetails = () => {
   const updateDetails = async(e) =>{
     e.preventDefault();
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/post-job/details`,formData,{ withCredentials: true }
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/company/details`,formData,{ withCredentials: true }
       );
-      showToast('Signup successful!', 'success');
-      navigate('/post-job/login');
+      if(response.data.success){
+        showToast('Signup successful!', 'success');
+        navigate('/post-job/login');
+      }
     } catch (error) {
       showToast(error.response?.data?.message || 'Details failed', 'error');
       console.log("error",error.response?.data?.message);
@@ -37,10 +39,9 @@ const CompanyDetails = () => {
 
   return (
     <div className='flex flex-col lg:flex-row min-h-screen'>
-          {/* Left Side */}
           <div className='w-full lg:w-1/2 bg-white px-4 py-6 lg:px-12'>
-            <h1 className='text-black font-serif text-4xl md:text-5xl lg:text-7xl'>Company Details</h1>
-            <p className='text-black font-serif text-sm lg:text-base font-light mt-3'>All details should be valid</p>
+            <h1 className='text-4xl md:text-5xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent'>Company Details</h1>
+            <p className='text-gray-600 text-sm lg:text-base mt-3'>All details should be valid</p>
             
             <form className='mt-8 lg:mt-14 flex flex-col space-y-8 lg:space-y-14' onSubmit={updateDetails} type='submit'>
             <div className='relative'>
@@ -51,7 +52,7 @@ const CompanyDetails = () => {
                   name='location'
                   value={formData.location} 
                   onChange={ handleInputChange}
-                  className='border-[0.1rem] w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none'
+                  className='border-2 w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none focus:border-blue-800'
                 />
               </div>
     
@@ -63,7 +64,7 @@ const CompanyDetails = () => {
                   name='website'
                   value={formData.website}
                   onChange={ handleInputChange} 
-                  className='border-[0.1rem] w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none'
+                  className='border-2 w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none focus:border-blue-800'
                 />
               </div>
     
@@ -75,7 +76,7 @@ const CompanyDetails = () => {
                   name='address'
                   value={formData.address}
                   onChange={ handleInputChange}
-                  className='border-[0.1rem] w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none' 
+                  className='border-2 w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none focus:border-blue-800' 
                 />
               </div>
     
@@ -87,11 +88,11 @@ const CompanyDetails = () => {
                   name='phone'
                   value={formData.phone}
                   onChange={ handleInputChange} 
-                  className='border-[0.1rem] w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none' 
+                  className='border-2 w-full h-12 lg:h-[4rem] border-blue-700 rounded-xl px-4 focus:outline-none focus:border-blue-800' 
                 />
               </div>
     
-              <button className='bg-blue-700 h-12 lg:h-[5rem] w-full text-white text-xl lg:text-3xl rounded-md hover:bg-blue-800 transition-colors' type='submit'>
+              <button className='bg-blue-700 h-12 lg:h-[4rem] w-full text-white text-xl font-semibold rounded-xl hover:bg-blue-800 transition-colors transform hover:scale-[1.01] active:scale-[0.99]' type='submit'>
                 Continue
               </button>
             </form>

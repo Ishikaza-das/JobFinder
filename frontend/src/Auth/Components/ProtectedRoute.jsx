@@ -1,16 +1,13 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../store/AuthContext'
+import { useAuth } from '../store/AuthContext';
+import { useCompanyAuth } from '../store/CompanyAuthContex';
 
 export const ProtectedRoute = ({ children }) => {
     const { user } = useAuth();
     return user ? children : <Navigate to="/login" />;
 };
 
-export const PublicRoute = ({ children }) => {
-    const { user } = useAuth();
-    return !user ? children : <Navigate to="/dashboard" />;
+export const CompanyProtectedRoute = ({ children }) => {
+    const { company } = useCompanyAuth();
+    return company ? children : <Navigate to="/post-job/login" />;
 };
-
-export const ValidationRoute = ({ children }) => {
-    return children;
-}

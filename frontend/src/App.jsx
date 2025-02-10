@@ -6,7 +6,7 @@ import Signup from './Auth/Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import { AuthProvider } from './Auth/store/AuthContext'
 import { ToastProvider } from './components/ToastContext'
-import { ProtectedRoute, PublicRoute, ValidationRoute } from "./Auth/Components/ProtectedRoute"
+import { ProtectedRoute } from "./Auth/Components/ProtectedRoute"
 import Job from './Pages/Job'
 // import GoogleLogin from './Auth/Components/GoogleLogin'
 import Profile from './User/pages/Profile'
@@ -31,15 +31,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <PublicRoute>
+    element: 
       <GoogleAuthWrapper Component={Signup} />
-    </PublicRoute>
   },
   {
     path: "/login",
-    element: <PublicRoute>
+    element: 
       <GoogleAuthWrapper Component={Login} />
-    </PublicRoute>
   },
   {
     path: "/dashboard",
@@ -61,27 +59,23 @@ const router = createBrowserRouter([
   },
   {
     path:"/post-job/signup",
-    element:<PublicRoute>
+    element:
       <CompanySignup/>
-    </PublicRoute>
   },
   {
     path:"/post-job/login",
-    element:<PublicRoute>
+    element:
       <CompanyLogin/>
-    </PublicRoute>
   },
   {
     path:"/post-job/details",
-    element:<ProtectedRoute>
+    element:
       <CompanyDetails/>
-    </ProtectedRoute>
   },
   {
     path:"/post-job/validate",
-    element:<ValidationRoute>
+    element:
       <ValidateEmail/>
-    </ValidationRoute>
   }
 ])
 

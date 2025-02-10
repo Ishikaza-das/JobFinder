@@ -1,34 +1,35 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
-const AuthContext = createContext(null);
+const CompanyAuthContext = createContext(null);
 
-export const useAuth = () => {
-    const context = useContext(AuthContext);
+export const useCompanyAuth = () => {
+    const context = useContext(CompanyAuthContext);
     if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error('useCompanyAuth must be used within a CompanyAuthProvider');
     }
     return context;
 };
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+
+export const CompanyAuthProvider = ({ children }) => {
+    const [company, setCompany] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const checkAuthStatus = async () => {
         try {
             const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/auth/check`,
+                `${import.meta.env.VITE_API_URL}/company/check`,
                 { withCredentials: true }
             );
             
-            if (response.data.user) {
-                setUser(response.data.user);
+            if (response.data.company) {
+                setCompany(response.data.company);
                 return true;
             }
-            setUser(null);
+            setCompany(null);
             return false;
         } catch (error) {
-            setUser(null);
+            setCompany(null);
             return false;
         } finally {
             setLoading(false);
@@ -43,14 +44,14 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const value = {
-        user,
-        setUser,
+        company,
+        setCompany,
         checkAuthStatus,
         loading
     };
 
     return (
-        <AuthContext.Provider value={value}>
+        <CompanyAuthContext.Provider value={value}>
             {loading ? (
                 <div className="flex items-center justify-center h-screen">
                     <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
@@ -58,6 +59,6 @@ export const AuthProvider = ({ children }) => {
             ) : (
                 children
             )}
-        </AuthContext.Provider>
+        </CompanyAuthContext.Provider>
     );
 };

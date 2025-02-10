@@ -12,7 +12,6 @@ const CompanySignup = () => {
   const [confirmPassword, setConfirmPassword] = useState();
   const {showToast} = useToast();
   const navigate = useNavigate();
-  
 
   const createCompanyAccount = async (e) =>{
     e.preventDefault();
