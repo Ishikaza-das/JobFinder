@@ -1,92 +1,63 @@
+const jwt = require('jsonwebtoken');
 const Comapany = require('../models/company');
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const { sendVerificationEmail } = require('../middleware/emailValidation');
-const Company = require('../models/company');
 
-const pendingRegistrations = new Map();
-
-const signupCompany = async (req,res) => {
+const getAllCompanies = async(req,res) => {
     try {
-        const {name, companyname, email, password} = req.body;
-        const existingCompany = await Comapany.findOne({ email });
-        if(existingCompany){
-            return res.status(400).json({
-                success: false,
-                message: "Email already registered"
-            });
-        }
-        const hashedPassword = await bcrypt.hash(password,10);
-        const pin = await sendVerificationEmail(email);
-        console.log('Generated PIN:', pin);
-        
-        pendingRegistrations.set(email, {
-            name,
-            companyname,
-            email,
-            password: hashedPassword,
-            pin
-        });
+        const companies = await Comapany.find({});
         res.status(200).json({
-            success: true,
-            message: "Please verify your email with PIN sent to your inbox",
+            companies
         });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
 
-const verifyEmail = async (req,res) => {
+const getCompanyProfile = async(req,res) => {
     try {
-        const {email, pin} = req.body;
-        const pendingRegistration = pendingRegistrations.get(email);
+        const companyId = req.companies.companyId;
+        const company = await Comapany.findById(companyId).select('-password');
 
-        if(!pendingRegistration){
-            return res.status(404).json({
-                success: false,
-                message: "Registration not found or expired"
-            });
-        }
-        if(pin.toString() !== pendingRegistration.pin.toString()){
-            return res.status(400).json({
-                success: false,
-                message: "Invalid PIN"
-            });
+        if(!company){
+            return res.status(404).json({message: "Company not found" });
         }
 
-        const newComapany = new Company({
-            name: pendingRegistration.name,
-            companyname: pendingRegistration.companyname,
-            email: pendingRegistration.email,
-            password: pendingRegistration.password,
-            verified: true
-        });
-
-        await newComapany.save();
-        pendingRegistrations.delete(email);
-
-        const token = jwt.sign({companyId: newComapany._id},process.env.SECRET_KEY,{expiresIn: '24h'});
-
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000
-        });
-        res.status(201).json({
+        res.status(200).json({
             success: true,
-            message: "Company registered & verified successfully"
+            company
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({
+            success: false,
+            message: "Error fetching profile",
+            error: error.message
+        });
     }
-}
+};
+
+const checkAuthStatus = async (req,res) => {
+    try {
+        const token = req.cookies.token;
+        if(!token){
+            return res.status(401).json({message: 'Not authenticated'});
+        }
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const company = await Comapany.findById(decode.companyId).select('-password');
+
+        if(!company){
+            return res.status(404).json({message: 'Company not found' });
+        }
+        res.json({ company});
+    } catch (error) {
+        res.status(401).json({message: 'Invalid token'});
+    }
+};
 
 const updateCompanyDetails = async(req,res) => {
     try {
         const { website, address, location, phone } = req.body;
         const companyId = req.company.id;
 
-         await Comapany.findByIdAndUpdate(
+        await Comapany.findByIdAndUpdate(
             companyId,
             {
                 location: location,
@@ -105,44 +76,4 @@ const updateCompanyDetails = async(req,res) => {
     }
 }
 
-const loginCompany = async (req,res) => {
-    try {
-        const { email, password} = req.body;
-        const companyUser = await Comapany.findOne({email});
-
-        if(!companyUser){
-            res.status(400).json({
-                message: "User not found"
-            });
-        };
-        if(!companyUser.verified){
-            res.status(400).json({
-                message: "Please verify your email first"
-            });
-        };
-        const isValidPassword = await bcrypt.compare(password, companyUser.password);
-        if(!isValidPassword) {
-            return res.status(400).json({message: 'Invalid password'});
-        }
-        const token = jwt.sign(
-            { companyId: companyUser._id },
-            process.env.SECRET_KEY,
-            { expiresIn: '24h' }
-        );
-
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000
-        });
-
-        res.status(200).json({
-            success: true,
-            message: "Login successfully",
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
-module.exports = {signupCompany, updateCompanyDetails, loginCompany, verifyEmail};
+module.exports = {getAllCompanies, getCompanyProfile, updateCompanyDetails, checkAuthStatus};
