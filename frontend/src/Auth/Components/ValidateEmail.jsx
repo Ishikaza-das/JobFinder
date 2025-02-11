@@ -3,21 +3,26 @@ import PostPanel from '../Components/PostPanel';
 import axios from 'axios';
 import { useToast } from '../../components/ToastContext';
 import { useNavigate } from 'react-router-dom';
+import { useCompanyAuth } from '../store/CompanyAuthContex';
 
 const ValidateEmail = () => {
   const [pin, setPin] = useState();
   const {showToast} = useToast();
   const navigate = useNavigate();
   const email = localStorage.getItem('tempEmail');
+  const { checkAuthStatus } = useCompanyAuth();
 
   const validate = async (e) => {
     e.preventDefault();
     const valipin = {pin, email};
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/post-job/verify-email`,valipin);
-      localStorage.removeItem('tempEmail');
-      navigate('/post-job/details');
-      showToast('Verified','success');
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/post-job/verify-email`,valipin,{ withCredentials: true });
+      if (response.data.success) {
+        localStorage.removeItem('tempEmail');
+        showToast('Verified', 'success');
+        await checkAuthStatus();
+        navigate('/post-job/details');
+      }
     } catch (error) {
       console.error('Error creating account:', error.response ? error.response.data : error.message);
       showToast(error.response?.data?.message || 'Signup failed', 'error');

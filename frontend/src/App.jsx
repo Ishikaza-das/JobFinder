@@ -5,8 +5,10 @@ import Login from './Auth/Pages/Login'
 import Signup from './Auth/Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import { AuthProvider } from './Auth/store/AuthContext'
+import { CompanyAuthProvider } from './Auth/store/CompanyAuthContex'
 import { ToastProvider } from './components/ToastContext'
 import { ProtectedRoute } from "./Auth/Components/ProtectedRoute"
+import {  CompanyProtectedRoute } from "./Auth/Components/ProtectedRoute"
 import Job from './Pages/Job'
 // import GoogleLogin from './Auth/Components/GoogleLogin'
 import Profile from './User/pages/Profile'
@@ -70,7 +72,9 @@ const router = createBrowserRouter([
   {
     path:"/post-job/details",
     element:
+    <CompanyProtectedRoute>
       <CompanyDetails/>
+    </CompanyProtectedRoute>
   },
   {
     path:"/post-job/validate",
@@ -83,7 +87,9 @@ function App() {
   return (
     <ToastProvider>
       <AuthProvider>
+        <CompanyAuthProvider>
         <RouterProvider router={router}/>
+        </CompanyAuthProvider>
       </AuthProvider>
     </ToastProvider>
   )
