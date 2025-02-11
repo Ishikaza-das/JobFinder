@@ -41,7 +41,7 @@ const checkAuthStatus = async (req,res) => {
             return res.status(401).json({message: 'Not authenticated'});
         }
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        const company = await Comapany.findById(decode.companyId).select('-password');
+        const company = await Comapany.findById(decoded.companyId).select('-password');
 
         if(!company){
             return res.status(404).json({message: 'Company not found' });
@@ -55,7 +55,7 @@ const checkAuthStatus = async (req,res) => {
 const updateCompanyDetails = async(req,res) => {
     try {
         const { website, address, location, phone } = req.body;
-        const companyId = req.company.id;
+        const companyId = req.company._id;
 
         await Comapany.findByIdAndUpdate(
             companyId,
