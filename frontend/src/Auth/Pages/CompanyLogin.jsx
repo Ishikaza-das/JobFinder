@@ -3,6 +3,7 @@ import back from '../../assets/back.svg'
 import PostPanel from '../Components/PostPanel';
 import { useState } from 'react';
 import { useToast } from '../../components/ToastContext';
+import { useCompanyAuth } from '../store/CompanyAuthContex';
 import axios from 'axios';
 
 const CompanyLogin = () => {
@@ -11,6 +12,7 @@ const CompanyLogin = () => {
   const [password, setPassword ] = useState();
   const navigate = useNavigate();
   const {showToast} = useToast();
+  const {setCompany} = useCompanyAuth();
 
   const loginCompany = async (e) => {
     e.preventDefault();
@@ -20,7 +22,17 @@ const CompanyLogin = () => {
     }
     const companyData = {email,password};
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/post-job/login`,companyData,{withCredentials:true});
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/post-job/login`,companyData,{withCredentials:true});
+      if (response.data.companyId) {
+        const companyResponse = await axios.get(
+          `${import.meta.env.VITE_API_URL}/company/companies${response.data.companyId}`,
+          {withCredentials: true},
+        );
+        console.log(companyResponse.data.company);
+        setCompany(companyResponse.data.company);
+        showToast('Login Successful', 'success');
+        // navigate('/company/dashboard');
+      }
       showToast('Login Successfull','success');
     } catch (error) {
       console.error('Error creating account:', error.response ? error.response.data : error.message);

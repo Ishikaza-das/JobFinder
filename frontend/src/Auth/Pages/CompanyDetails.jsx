@@ -20,22 +20,28 @@ const CompanyDetails = () => {
       ...prev,[name]: value
     }));
   };
-  const updateDetails = async(e) =>{
+  const updateDetails = async(e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/company/details`,formData,{ withCredentials: true }
+      const profileResponse = await axios.get(
+        `${import.meta.env.VITE_API_URL}/company/check`,
+        { withCredentials: true }
       );
-      if(response.data.success){
-        showToast('Signup successful!', 'success');
+      const companyId = profileResponse.data.company._id;
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/company/details/${companyId}`,
+        formData,
+        { withCredentials: true }
+      );
+      if(response.data.success) {
+        showToast('Details updated successfully!', 'success');
         navigate('/post-job/login');
       }
     } catch (error) {
-      showToast(error.response?.data?.message || 'Details failed', 'error');
-      console.log("error",error.response?.data?.message);
-      
+      showToast(error.response?.data?.message || 'Update failed', 'error');
+      console.log("error", error.response?.data?.message);
     }
-  }
-
+}
 
   return (
     <div className='flex flex-col lg:flex-row min-h-screen'>

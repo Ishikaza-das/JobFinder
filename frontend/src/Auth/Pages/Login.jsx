@@ -7,7 +7,6 @@ import { useAuth } from "../store/AuthContext";
 import { useToast } from "../../components/ToastContext";
 import back from '../../assets/back.svg'
 
-
 const Login = () => {
   const { handleGoogleLogin } = GoogleLogin();
     const [email, SetEmail] = useState('');
