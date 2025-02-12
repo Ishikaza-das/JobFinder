@@ -16,29 +16,34 @@ const CompanyLogin = () => {
 
   const loginCompany = async (e) => {
     e.preventDefault();
-    if(!email && !password){
+    // console.log("Login attempt with:", { email, password });
+    if(!email || !password){
       showToast('Please fill all details', 'error');
       return;
     }
-    const companyData = {email,password};
+    const companyData = {email, password};
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/post-job/login`,companyData,{withCredentials:true});
-      if (response.data.companyId) {
-        const companyResponse = await axios.get(
-          `${import.meta.env.VITE_API_URL}/company/companies${response.data.companyId}`,
-          {withCredentials: true},
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/post-job/login`,
+        companyData,
+        {withCredentials: true}
+      );
+      // console.log("Login response:", response.data);
+      if (response.data.success) {
+        const profileResponse = await axios.get(
+          `${import.meta.env.VITE_API_URL}/company/check`,
+          {withCredentials: true}
         );
-        console.log(companyResponse.data.company);
-        setCompany(companyResponse.data.company);
+        
+        setCompany(profileResponse.data.company);
         showToast('Login Successful', 'success');
-        // navigate('/company/dashboard');
+        navigate('/company/dashboard');
       }
-      showToast('Login Successfull','success');
     } catch (error) {
-      console.error('Error creating account:', error.response ? error.response.data : error.message);
+      console.log("Login error:", error);
       showToast(error.response?.data?.message || 'Login failed', 'error');
     }
-  }
+}
 
   const onBack = () =>{
     navigate('/');

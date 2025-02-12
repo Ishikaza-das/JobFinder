@@ -16,6 +16,7 @@ import CompanySignup from './Auth/Pages/CompanySignup'
 import CompanyLogin from './Auth/Pages/CompanyLogin'
 import CompanyDetails from './Auth/Pages/CompanyDetails'
 import ValidateEmail from './Auth/Components/ValidateEmail'
+import CompanyDashboard from './Pages/CompanyDashboard'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -80,6 +81,12 @@ const router = createBrowserRouter([
     path:"/post-job/validate",
     element:
       <ValidateEmail/>
+  },
+  {
+    path:"/company/dashboard",
+    element: <CompanyProtectedRoute>
+      <CompanyDashboard/>
+    </CompanyProtectedRoute>
   }
 ])
 
