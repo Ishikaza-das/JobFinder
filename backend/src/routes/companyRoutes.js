@@ -5,7 +5,7 @@ const { getAllCompanies,  getCompanyProfile, updateCompanyDetails, checkAuthStat
 
 router.get('/companies',getAllCompanies);
 router.get('/companies/:id',validateCompanyToken, getCompanyProfile);
-router.put('/details', validateCompanyToken, updateCompanyDetails);
+router.put('/details/:id', validateCompanyToken, updateCompanyDetails);
 router.get('/check',validateCompanyToken,checkAuthStatus);
 
 module.exports = router;

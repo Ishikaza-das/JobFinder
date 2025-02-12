@@ -16,7 +16,7 @@ const validateCompanyToken = async (req, res, next) => {
             return res.status(404).json({ message: 'Company not found' });
         }
 
-        req.company = company;
+         req.companies = { companyId: company._id };
         next();
     } catch (error) {
         res.status(401).json({ message: 'Invalid token' });

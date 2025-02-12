@@ -55,7 +55,7 @@ const checkAuthStatus = async (req,res) => {
 const updateCompanyDetails = async(req,res) => {
     try {
         const { website, address, location, phone } = req.body;
-        const companyId = req.company._id;
+        const companyId = req.params.id;
 
         await Comapany.findByIdAndUpdate(
             companyId,
