@@ -17,6 +17,8 @@ import CompanyLogin from './Auth/Pages/CompanyLogin'
 import CompanyDetails from './Auth/Pages/CompanyDetails'
 import ValidateEmail from './Auth/Components/ValidateEmail'
 import CompanyDashboard from './Pages/CompanyDashboard'
+import Openings from './Pages/Openings'
+import CompanyLayout from './Layout/CompanyLayout'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -82,11 +84,31 @@ const router = createBrowserRouter([
     element:
       <ValidateEmail/>
   },
+  // {
+  //   path:"/company/dashboard",
+  //   element: <CompanyProtectedRoute>
+  //     <CompanyDashboard/>
+  //   </CompanyProtectedRoute>
+  // },
+  // {
+  //   path:"/company/copenings",
+  //   element: <CompanyProtectedRoute>
+  //     <Openings/>
+  //   </CompanyProtectedRoute>
+  // }
   {
-    path:"/company/dashboard",
-    element: <CompanyProtectedRoute>
-      <CompanyDashboard/>
-    </CompanyProtectedRoute>
+    path: "/company",
+    element: <CompanyProtectedRoute><CompanyLayout/></CompanyProtectedRoute>,
+    children:[
+      {
+        path: "dashboard",
+        element: <CompanyDashboard/>
+      },
+      {
+        path: "copenings",
+        element: <Openings/>
+      },
+    ]
   }
 ])
 
