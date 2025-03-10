@@ -9,6 +9,7 @@ const openingSchema = new mongoose.Schema({
     salary: {type: String, required: true},
     description: {type: String, required: true},
     skill: {type: String, required: true},
+    companyname: {type: String, required: true},
     company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Company'
