@@ -9,6 +9,7 @@ const googleAuthRoutes = require('./routes/googleAuthRoutes');
 const userRoutes = require('./routes/userRoutes');
 const companyAuthRoutes = require('./routes/companyAuthRoutes');
 const companyRoutes = require('./routes/companyRoutes');
+const openingsRoutes = require('./routes/openingsRoutes');
 
 
 const app = express();
@@ -32,6 +33,7 @@ app.use('/job/auth',googleAuthRoutes);
 app.use('/auth', userRoutes);
 app.use('/post-job',companyAuthRoutes);
 app.use('/company',companyRoutes);
+app.use('/openings',openingsRoutes);
 // app.use('/admin/ds', userRoutes);
 
 app.listen(PORT, () => {
