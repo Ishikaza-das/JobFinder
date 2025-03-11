@@ -9,7 +9,8 @@ const companySchema = new mongoose.Schema({
     address: {type: String},
     location: {type: String},
     phone: {type: String},
-    verified: {type: Boolean, default: false}
+    verified: {type: Boolean, default: false},
+    jobpostings: {type: Number, default: 0}
 });
 
 const Company = mongoose.model('Comapany',companySchema);
