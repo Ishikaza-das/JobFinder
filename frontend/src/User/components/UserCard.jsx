@@ -25,7 +25,7 @@ const UserCard = () => {
   };
 
   const NavProfile = () => {
-    navigate('/profile');
+    navigate('/hire/profile');
   }
 
   return (

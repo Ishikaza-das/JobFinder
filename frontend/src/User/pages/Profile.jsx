@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Navbar from "../../Pages/components/Navbar";
 import userSvg from '../../assets/user-circle-svgrepo-com.svg';
 import { updateUserProfile } from '../api/UpdateService';
 import { useToast } from '../../components/ToastContext';
@@ -81,7 +80,6 @@ const Profile = () => {
 
     return (
         <>
-            <Navbar/>
             <div className='container flex flex-row my-10 mx-auto px-10 gap-20'>
                 <div className="relative h-60 w-60">
                     <div className="h-full w-full rounded-full border border-gray-400 overflow-hidden">

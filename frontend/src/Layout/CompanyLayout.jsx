@@ -13,3 +13,4 @@ const CompanyLayout = () => {
 }
 
 export default CompanyLayout
+

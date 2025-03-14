@@ -31,7 +31,7 @@ const Login = () => {
           );
           setUser(userResponse.data);
           showToast('Login successful!', 'success')
-          navigate('/dashboard');
+          navigate('/hire/dashboard');
       }
       }catch(error){
         console.error('Login error:', error.response?.data?.message);

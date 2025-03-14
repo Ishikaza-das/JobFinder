@@ -19,6 +19,7 @@ import ValidateEmail from './Auth/Components/ValidateEmail'
 import CompanyDashboard from './Pages/CompanyDashboard'
 import Openings from './Pages/Openings'
 import CompanyLayout from './Layout/CompanyLayout'
+import UserLayout from './Layout/UserLayout'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -45,22 +46,22 @@ const router = createBrowserRouter([
       <GoogleAuthWrapper Component={Login} />
   },
   {
-    path: "/dashboard",
-    element: <ProtectedRoute>
-      <Dashboard/>
-    </ProtectedRoute>
-  },
-  {
-    path: "/jobs",
-    element: <ProtectedRoute>
-      <Job/>
-    </ProtectedRoute>
-  },
-  {
-    path:"/profile",
-    element: <ProtectedRoute>
-      <Profile/>
-    </ProtectedRoute>
+    path: "/hire",
+    element: <ProtectedRoute><UserLayout/></ProtectedRoute>,
+    children:[
+      {
+        path:"dashboard",
+        element:<Dashboard/>
+      },
+      {
+        path:"jobs",
+        element:<Job/>
+      },
+      {
+        path:"profile",
+        element: <Profile/>
+      }
+    ]
   },
   {
     path:"/post-job/signup",
@@ -84,18 +85,6 @@ const router = createBrowserRouter([
     element:
       <ValidateEmail/>
   },
-  // {
-  //   path:"/company/dashboard",
-  //   element: <CompanyProtectedRoute>
-  //     <CompanyDashboard/>
-  //   </CompanyProtectedRoute>
-  // },
-  // {
-  //   path:"/company/copenings",
-  //   element: <CompanyProtectedRoute>
-  //     <Openings/>
-  //   </CompanyProtectedRoute>
-  // }
   {
     path: "/company",
     element: <CompanyProtectedRoute><CompanyLayout/></CompanyProtectedRoute>,

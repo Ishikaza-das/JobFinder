@@ -1,8 +1,8 @@
 const Navlist  = [
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Job", path: "/jobs" },
-    { name: "About", path: "/about" },
-    { name: "D", path: "/d" }
+    { name: "Dashboard", path: "/hire/dashboard" },
+    { name: "Job", path: "/hire/jobs" },
+    { name: "About", path: "/hire/about" },
+    { name: "D", path: "/hire/d" }
 ];
 
 export default Navlist;

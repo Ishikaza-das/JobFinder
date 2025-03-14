@@ -17,7 +17,7 @@ export default function Panel() {
             &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate &quot;
           </p>
 
-          <div className='flex items-center mt-8 lg:mt-10 pl-6 lg:pl-60'>
+          {/* <div className='flex items-center mt-8 lg:mt-10 pl-6 lg:pl-60'>
             <div className='rounded-full h-16 w-16 lg:h-20 lg:w-20 overflow-hidden'>
               <img className='object-cover h-full w-full' src={globalimg} alt="Ratan Tata" />
             </div>
@@ -25,7 +25,7 @@ export default function Panel() {
               <p className='text-white text-xl lg:text-2xl font-mono'>&quot;Ratan Tata&quot;</p>
               <p className='text-white text-lg lg:text-xl font-mono font-light'>Founder</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
