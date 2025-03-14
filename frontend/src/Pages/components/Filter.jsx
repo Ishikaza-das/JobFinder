@@ -1,5 +1,5 @@
 import { useState } from "react";
-import '../style/Slider.css'
+import '../style/Slider.css';
 
 const Filter = () => {
   const [showCustomSlider, setShowCustomSlider] = useState(false);
@@ -10,142 +10,96 @@ const Filter = () => {
   };
 
   return (
-    <>
-      <form className="border border-gray-400 h-auto w-96 mx-4 my-2 rounded-lg">
-        <div className="flex flex-row justify-between border border-b-gray-400 h-auto">
-          <label className="px-2 pt-6 text-lg font-bold font-serif">
-            Filter
-          </label>
-          <button className="px-2 pt-6 text-red-600">Clear All</button>
-        </div>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden sticky top-4">
+      <div className="bg-blue-600 px-4 py-3 flex justify-between items-center">
+        <h2 className="text-white font-bold text-lg">Filter Jobs</h2>
+        <button className="text-white hover:text-blue-200 text-sm font-medium transition-colors duration-200">
+          Clear All
+        </button>
+      </div>
 
-        <div className="flex flex-col p-2">
-          <label className="px-2 pt-4 text-lg font-bold font-serif">
-            Date Post
+      <form className="p-4 space-y-6">
+        {/* Date Posted */}
+        <div className="space-y-2">
+          <label className="block text-gray-700 font-medium">
+            Date Posted
           </label>
           <select
             id="time"
             name="time"
-            className="mx-2 my-2 border border-gray-400 rounded-sm focus:outline-none p-2"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
             defaultValue="anytime"
           >
             <option value="anytime">Anytime</option>
             <option value="recent">Recent</option>
-            <option value="6hr">6 hour</option>
-            <option value="1day">1 day</option>
+            <option value="6hr">Last 6 hours</option>
+            <option value="1day">Last 24 hours</option>
+            <option value="7days">Last 7 days</option>
           </select>
         </div>
 
-        <div className="flex flex-col p-4">
-          <label className="px-2 mb-2 text-lg font-bold font-serif">
+        {/* Job Type */}
+        <div className="space-y-3">
+          <label className="block text-gray-700 font-medium">
             Job Type
           </label>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="checkbox"
-                id="fulltime"
-                name="jobType"
-                value="fulltime"
-                className="w-4 h-4"
-              />
-              <label htmlFor="fulltime">Full Time</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="checkbox"
-                id="parttime"
-                name="jobType"
-                value="parttime"
-                className="w-4 h-4"
-              />
-              <label htmlFor="parttime">Part Time</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="checkbox"
-                id="freelancer"
-                name="jobType"
-                value="freelancer"
-                className="w-4 h-4"
-              />
-              <label htmlFor="freelancer">Freelancer</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="checkbox"
-                id="volunteer"
-                name="jobType"
-                value="volunteer"
-                className="w-4 h-4"
-              />
-              <label htmlFor="volunteer">Volunteer</label>
-            </div>
+          <div className="grid grid-cols-2 gap-3">
+            {['Full Time', 'Part Time', 'Freelancer', 'Volunteer'].map((type) => (
+              <div key={type} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={type.toLowerCase().replace(' ', '')}
+                  name="jobType"
+                  value={type.toLowerCase().replace(' ', '')}
+                  className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                />
+                <label htmlFor={type.toLowerCase().replace(' ', '')} className="ml-2 text-gray-700">
+                  {type}
+                </label>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="flex flex-col p-4">
-          <label className="px-2 mb-2 text-lg font-bold font-serif">
+        {/* Salary Range */}
+        <div className="space-y-3">
+          <label className="block text-gray-700 font-medium">
             Salary Range
           </label>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="radio"
-                id="4lpa"
-                name="salaryrange"
-                value="4lpa"
-                className="w-4 h-4"
-                onChange={handleRadioChange}
-              />
-              <label htmlFor="4lpa">Under 4LPA</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="radio"
-                id="8lpa"
-                name="salaryrange"
-                value="8lpa"
-                className="w-4 h-4"
-                onChange={handleRadioChange}
-              />
-              <label htmlFor="8lpa">Under 8LPA</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="radio"
-                id="10lpa"
-                name="salaryrange"
-                value="10lpa"
-                className="w-4 h-4"
-                onChange={handleRadioChange}
-              />
-              <label htmlFor="10lpa">Under 10LPA</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="radio"
-                id="custom"
-                name="salaryrange"
-                value="custom"
-                className="w-4 h-4"
-                onChange={handleRadioChange}
-              />
-              <label htmlFor="custom">Custom</label>
-            </div>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { id: '4lpa', label: 'Under 4 LPA' },
+              { id: '8lpa', label: 'Under 8 LPA' },
+              { id: '10lpa', label: 'Under 10 LPA' },
+              { id: 'custom', label: 'Custom' }
+            ].map((option) => (
+              <div key={option.id} className="flex items-center">
+                <input
+                  type="radio"
+                  id={option.id}
+                  name="salaryrange"
+                  value={option.id}
+                  className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                  onChange={handleRadioChange}
+                />
+                <label htmlFor={option.id} className="ml-2 text-gray-700">
+                  {option.label}
+                </label>
+              </div>
+            ))}
           </div>
 
           {showCustomSlider && (
-            <div className="px-4 py-2">
-              <div className="relative pt-8">
+            <div className="mt-4 px-2">
+              <div className="relative pt-10">
                 <div 
-                  className="absolute -top-2 w-16 text-center bg-blue-500 text-white px-2 py-1 rounded shadow-md"
+                  className="absolute -top-2 w-16 text-center bg-blue-600 text-white px-2 py-1 rounded shadow-md text-sm"
                   style={{ left: `calc(${(range[0] / 50) * 100}% - 2rem)` }}
                 >
                   {range[0]} LPA
                 </div>
                 <div 
-                  className="absolute -top-2 w-16 text-center bg-blue-500 text-white px-2 py-1 rounded shadow-md"
+                  className="absolute -top-2 w-16 text-center bg-blue-600 text-white px-2 py-1 rounded shadow-md text-sm"
                   style={{ left: `calc(${(range[1] / 50) * 100}% - 2rem)` }}
                 >
                   {range[1]} LPA
@@ -153,7 +107,7 @@ const Filter = () => {
                 <div className="relative">
                   <div className="absolute w-full h-1 bg-gray-200 rounded-lg"></div>
                   <div 
-                    className="absolute h-1 bg-blue-500 rounded-lg" 
+                    className="absolute h-1 bg-blue-600 rounded-lg" 
                     style={{
                       left: `${(range[0] / 50) * 100}%`,
                       width: `${((range[1] - range[0]) / 50) * 100}%`
@@ -176,7 +130,7 @@ const Filter = () => {
                     className="pointer-events-none absolute w-full h-1 appearance-none z-20"
                   />
                 </div>
-                <div className="flex justify-between text-sm text-gray-600 mt-2">
+                <div className="flex justify-between text-sm text-gray-600 mt-4">
                   <span>1 LPA</span>
                   <span>50 LPA</span>
                 </div>
@@ -185,46 +139,38 @@ const Filter = () => {
           )}
         </div>
 
-        <div className="flex flex-col p-4">
-          <label className="px-2 mb-2 text-lg font-bold font-serif">
-            On-site/Remote
+        {/* Work Mode */}
+        <div className="space-y-3">
+          <label className="block text-gray-700 font-medium">
+            Work Mode
           </label>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2 px-2 py-1">
-              <input
-                type="checkbox"
-                id="on-site"
-                name="on-site/remote"
-                value="on-site"
-                className="w-4 h-4"
-              />
-              <label htmlFor="on-site">On-site</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-            <input
-                type="checkbox"
-                id="hybrid"
-                name="on-site/remote"
-                value="hybrid"
-                className="w-4 h-4"
-              />
-              <label htmlFor="hybrid">Hybrid</label>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1">
-            <input
-                type="checkbox"
-                id="remote"
-                name="on-site/remote"
-                value="remote"
-                className="w-4 h-4"
-              />
-              <label htmlFor="remote">Remote</label>
-            </div>
+          <div className="grid grid-cols-2 gap-3">
+            {['On-site', 'Hybrid', 'Remote'].map((mode) => (
+              <div key={mode} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={mode.toLowerCase()}
+                  name="workMode"
+                  value={mode.toLowerCase()}
+                  className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                />
+                <label htmlFor={mode.toLowerCase()} className="ml-2 text-gray-700">
+                  {mode}
+                </label>
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* Apply Filters Button */}
+        <button
+          type="button"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300"
+        >
+          Apply Filters
+        </button>
       </form>
-    </>
+    </div>
   );
 };
 
