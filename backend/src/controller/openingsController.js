@@ -50,4 +50,13 @@ const totalJobs = async(req,res) => {
     }
 }
 
-module.exports = {createOpenings, totalJobs};
+const getAllJobs = async (req,res) => {
+    try {
+        const jobs = await Openings.find({});
+        res.status(200).json({jobs});
+    } catch (error) {
+        res.status(400).json({message: error.message});
+    }
+}
+
+module.exports = {createOpenings, totalJobs, getAllJobs};
