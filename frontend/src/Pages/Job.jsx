@@ -1,5 +1,5 @@
 import Filter from './components/Filter'
-import JobList from './components/JobList'
+import JobList from './store/JobList'
 
 
 export default function Job() {

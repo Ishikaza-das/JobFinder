@@ -20,6 +20,8 @@ import CompanyDashboard from './Pages/CompanyDashboard'
 import Openings from './Pages/Openings'
 import CompanyLayout from './Layout/CompanyLayout'
 import UserLayout from './Layout/UserLayout'
+import ProfileLayout from './Layout/ProfileLayout'
+import BasicDetails from './User/pages/BasicDetails'
 
 
 const GoogleAuthWrapper = ({ Component }) => {
@@ -59,7 +61,13 @@ const router = createBrowserRouter([
       },
       {
         path:"profile",
-        element: <Profile/>
+        element: <ProfileLayout/>,
+        children:[
+          {
+            path:"basicdetails",
+            element:<BasicDetails/>
+          }
+        ]
       }
     ]
   },

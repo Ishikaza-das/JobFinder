@@ -1,85 +1,93 @@
-import { useState, useEffect } from 'react';
-import userSvg from '../../assets/user-circle-svgrepo-com.svg';
-import { updateUserProfile } from '../api/UpdateService';
-import { useToast } from '../../components/ToastContext';
-import axios from 'axios';
+// import { useState, useEffect } from 'react';
+// import userSvg from '../../assets/user-circle-svgrepo-com.svg';
+// import { updateUserProfile } from '../api/UpdateService';
+// import { useToast } from '../../components/ToastContext';
+// import axios from 'axios';
 
-const Profile = () => {
-    const { showToast } = useToast();
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        countryCode: '',
-        mobileno: '',
-        address: '',
-        country: '',
-        state: ''
-    });
-    const [loading, setLoading] = useState(false);
+// const Profile = () => {
+//     const { showToast } = useToast();
+//     const [formData, setFormData] = useState({
+//         name: '',
+//         email: '',
+//         countryCode: '',
+//         mobileno: '',
+//         address: '',
+//         country: '',
+//         state: ''
+//     });
+//     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        loadUserData();
-    }, []);
+//     useEffect(() => {
+//         loadUserData();
+//     }, []);
 
-    const loadUserData = async () => {
-        try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/check`, {
-                withCredentials: true
-            });
+//     const loadUserData = async () => {
+//         try {
+//             const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/check`, {
+//                 withCredentials: true
+//             });
             
-            const user = response.data.user;
-            const phoneNumber = user.mobileno || '';
-            const countryCode = phoneNumber.substring(0, 2);
-            const number = phoneNumber.substring(2);
+//             const user = response.data.user;
+//             const phoneNumber = user.mobileno || '';
+//             const countryCode = phoneNumber.substring(0, 2);
+//             const number = phoneNumber.substring(2);
 
-            setFormData({
-                name: user.name || '',
-                email: user.email || '',
-                countryCode: countryCode || '',
-                mobileno: number || '',
-                address: user.address || '',
-                country: user.country || '',
-                state: user.state || ''
-            });
-        } catch (error) {
-            showToast('Failed to load user data', 'error');
-        }
-    };
+//             setFormData({
+//                 name: user.name || '',
+//                 email: user.email || '',
+//                 countryCode: countryCode || '',
+//                 mobileno: number || '',
+//                 address: user.address || '',
+//                 country: user.country || '',
+//                 state: user.state || ''
+//             });
+//         } catch (error) {
+//             showToast('Failed to load user data', 'error');
+//         }
+//     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+//     const handleInputChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormData(prev => ({
+//             ...prev,
+//             [name]: value
+//         }));
+//     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         setLoading(true);
         
-        const userData = {
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            mobileno: `${formData.countryCode}${formData.mobileno}`.trim(),
-            address: formData.address.trim(),
-            country: formData.country.trim(),
-            state: formData.state.trim()
-        };
+//         const userData = {
+//             name: formData.name.trim(),
+//             email: formData.email.trim(),
+//             mobileno: `${formData.countryCode}${formData.mobileno}`.trim(),
+//             address: formData.address.trim(),
+//             country: formData.country.trim(),
+//             state: formData.state.trim()
+//         };
         
-        try {
-            const response = await updateUserProfile(userData);
-            showToast('Profile updated successfully', 'success');
-            loadUserData();
-        } catch (error) {
-            showToast('Update failed', 'error');
-        } finally {
-            setLoading(false);
-        }
-    };    
+//         try {
+//             const response = await updateUserProfile(userData);
+//             showToast('Profile updated successfully', 'success');
+//             loadUserData();
+//         } catch (error) {
+//             showToast('Update failed', 'error');
+//         } finally {
+//             setLoading(false);
+//         }
+//     };    
 
-    return (
-        <>
+//     return (
+//         <>
+            
+//         </>
+//     );
+// };
+
+// export default Profile;
+
+{/* <>
             <div className='container flex flex-row my-10 mx-auto px-10 gap-20'>
                 <div className="relative h-60 w-60">
                     <div className="h-full w-full rounded-full border border-gray-400 overflow-hidden">
@@ -188,8 +196,4 @@ const Profile = () => {
                     </div>
                 </form>
             </div>
-        </>
-    );
-};
-
-export default Profile;
+        </> */}

@@ -8,7 +8,7 @@ const Navbar = () => {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(location.pathname);
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+    <nav className="top-0 left-0 right-0 z-50 bg-white shadow-md">
     <div className="bg-gray-300/20 h-24 border-b-2 border-b-gray-500/40 grid grid-flow-col items-center justify-between">
       <div>
         <h1 className="px-4 text-4xl font-serif">JobFinder</h1>
@@ -35,7 +35,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-  </div>
+  </nav>
 )
 }
 

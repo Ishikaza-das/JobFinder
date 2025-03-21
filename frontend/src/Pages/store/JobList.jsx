@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
+import JobCard from "../components/JobCard";
 
 const JobList = () => {
 
@@ -25,37 +26,16 @@ const JobList = () => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Available Positions</h2>
-      
       {result && result.length > 0 ? (
         <div className="space-y-4">
           {result.map((item, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow duration-300 bg-white">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-xl font-semibold text-blue-600">{item.jobtitle}</h3>
-                  <div className="mt-2 text-gray-600">
-                    <p className="flex items-center gap-1">
-                      <span className="font-medium">Company:</span> {item.companyname}
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    {item.openingid}
-                  </span>
-                  <p className="text-sm text-gray-500 mt-1">{item.department}</p>
-                </div>
-              </div>
-              <div className="mt-3">
-                <h4 className="font-medium text-gray-700">Description:</h4>
-                <p className="text-gray-600 whitespace-pre-line">{item.description}</p>
-              </div>
-              <div className="mt-4 flex justify-end">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300">
-                  Apply Now
-                </button>
-              </div>
-            </div>
+            <JobCard key={index}
+            jobtitle={item.jobtitle}
+            company={item.companyname}
+            openingid={item.openingid}
+            department={item.department}
+            description={item.description}
+            />
           ))}
         </div>
       ) : (

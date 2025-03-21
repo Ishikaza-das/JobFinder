@@ -3,8 +3,7 @@ import { useState } from "react"
 import { useToast } from '../components/ToastContext';
 
 const Openings = () => {
-  const {showToast} = useToast();
-  const [formData, setFormData] = useState({
+  const initialState = ({
     jobtitle:'',
     department:'',
     location:'',
@@ -12,7 +11,9 @@ const Openings = () => {
     salary:'',
     description:'',
     skill:'',
-  });
+  })
+  const {showToast} = useToast();
+  const [formData, setFormData] = useState({initialState});
 
   const handleInputChange = (e) => {
     const {name, value} = e.target;
@@ -26,6 +27,7 @@ const Openings = () => {
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/openings/createop`,formData,{ withCredentials: true });
       showToast('Opening Created', 'success')
+      setFormData(initialState);
     } catch (error) {
       showToast(error.response?.data?.message || 'Opening failed', 'error');
       console.log(error);
