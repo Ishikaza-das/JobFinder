@@ -3,9 +3,9 @@ import UnavBar from '../User/components/UnavBar'
 
 const ProfileLayout = () => {
   return (
-    <div className="flex h-screen"> {/* Added padding-top to account for navbar */}
+    <div className="flex h-screen"> 
       <UnavBar/>
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1">
         <Outlet/>
       </div>
     </div>

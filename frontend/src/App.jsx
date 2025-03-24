@@ -11,7 +11,7 @@ import { ProtectedRoute } from "./Auth/Components/ProtectedRoute"
 import {  CompanyProtectedRoute } from "./Auth/Components/ProtectedRoute"
 import Job from './Pages/Job'
 // import GoogleLogin from './Auth/Components/GoogleLogin'
-import Profile from './User/pages/Profile'
+// import Profile from './User/pages/Profile'
 import CompanySignup from './Auth/Pages/CompanySignup'
 import CompanyLogin from './Auth/Pages/CompanyLogin'
 import CompanyDetails from './Auth/Pages/CompanyDetails'

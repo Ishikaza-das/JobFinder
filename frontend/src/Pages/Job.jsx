@@ -9,7 +9,7 @@ export default function Job() {
         <div className='col-span-1'>
           <Filter/>
         </div> 
-        <div className='col-span-5'>
+        <div className='col-span-5 h-s'>
           <JobList/>
         </div>
       </div>

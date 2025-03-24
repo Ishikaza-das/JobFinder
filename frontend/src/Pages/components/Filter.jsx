@@ -19,7 +19,6 @@ const Filter = () => {
       </div>
 
       <form className="p-4 space-y-6">
-        {/* Date Posted */}
         <div className="space-y-2">
           <label className="block text-gray-700 font-medium">
             Date Posted
@@ -38,7 +37,6 @@ const Filter = () => {
           </select>
         </div>
 
-        {/* Job Type */}
         <div className="space-y-3">
           <label className="block text-gray-700 font-medium">
             Job Type
