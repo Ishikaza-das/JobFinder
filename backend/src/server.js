@@ -10,6 +10,12 @@ const userRoutes = require('./routes/userRoutes');
 const companyAuthRoutes = require('./routes/companyAuthRoutes');
 const companyRoutes = require('./routes/companyRoutes');
 const openingsRoutes = require('./routes/openingsRoutes');
+const detailsRoutes = require('./routes/detailsRoutes');
+const educationRoutes = require('./routes/educationRoutes');
+const internshipRoutes = require('./routes/internshipRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const responsibilityRouter = require('./routes/responsibilityRoutes');
+const skillRoutes = require('./routes/skillRoutes');
 
 
 const app = express();
@@ -34,6 +40,8 @@ app.use('/auth', userRoutes);
 app.use('/post-job',companyAuthRoutes);
 app.use('/company',companyRoutes);
 app.use('/openings',openingsRoutes);
+app.use('/profile',detailsRoutes,educationRoutes,internshipRoutes,projectRoutes,responsibilityRouter,skillRoutes);
+
 // app.use('/admin/ds', userRoutes);
 
 app.listen(PORT, () => {
