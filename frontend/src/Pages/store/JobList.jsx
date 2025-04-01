@@ -32,15 +32,14 @@ const JobList = () => {
 
   return (
     <div className="p-4 h-[calc(100vh-80px)] flex flex-col overflow-hidden">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4 bg-white z-10">
+      
+      <div className="flex justify-between items-center mb-4 z-10">
         <h2 className="text-2xl font-bold text-gray-800">Available Positions</h2>
         <span className="text-sm text-gray-500">
           {result.length} {result.length === 1 ? 'position' : 'positions'} available
         </span>
       </div>
 
-      {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto">
         {loading ? (
           <div className="flex items-center justify-center h-full">

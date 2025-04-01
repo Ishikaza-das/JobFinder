@@ -6,7 +6,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const JobNV = () =>{
-    navigate('/jobs');
+    navigate('/hire/jobs');
   }
   
   return (

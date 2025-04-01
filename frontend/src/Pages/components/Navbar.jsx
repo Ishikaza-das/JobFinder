@@ -10,7 +10,6 @@ const Navbar = () => {
   const [currentDateTime, setCurrentDateTime] = useState('');
 
   useEffect(() => {
-    // Function to format local date and time
     const formatDateTime = () => {
       const now = new Date();
       const year = now.getFullYear();
@@ -23,15 +22,12 @@ const Navbar = () => {
       return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     };
 
-    // Set initial time
     setCurrentDateTime(formatDateTime());
 
-    // Update time every second
     const timer = setInterval(() => {
       setCurrentDateTime(formatDateTime());
     }, 1000);
 
-    // Cleanup interval on unmount
     return () => clearInterval(timer);
   }, []);
 
@@ -39,7 +35,7 @@ const Navbar = () => {
     <nav className="top-0 left-0 right-0 z-50 bg-white shadow-sm">
       <div className="px-4">
         <div className="h-16 flex items-center justify-between">
-          {/* Logo Section - Start */}
+
           <div className="flex-shrink-0 flex items-center space-x-3">
             <div className="w-9 h-9 bg-gradient-to-r from-blue-600 to-blue-700 
               rounded-lg flex items-center justify-center shadow-md">
@@ -51,7 +47,6 @@ const Navbar = () => {
             </h1>
           </div>
 
-          {/* Navigation Links - Center */}
           <div className="hidden md:flex flex-1 items-center justify-center px-8">
             <div className="flex items-center space-x-6">
               {Navlist.map((item, index) => (
@@ -72,16 +67,14 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* User Section - End */}
           <div className="flex items-center space-x-4">
-            {/* Local Time Display */}
+
             <div className="hidden lg:flex flex-col items-end">
               <span className="text-sm font-medium text-gray-600">
                 {currentDateTime}
               </span>
             </div>
 
-            {/* User Profile */}
             <div className="relative group">
               <div className="flex items-center">
                 <div className="h-9 w-9 rounded-full overflow-hidden 
@@ -96,7 +89,6 @@ const Navbar = () => {
                 </div>
               </div>
 
-              {/* Dropdown Menu */}
               <div className="hidden group-hover:block absolute right-0 mt-2 w-64 
                 origin-top-right bg-white rounded-xl shadow-lg border border-gray-100
                 transform transition-all duration-200">

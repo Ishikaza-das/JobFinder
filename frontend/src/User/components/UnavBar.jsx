@@ -1,9 +1,14 @@
-import React from 'react';
+
 import { NavLink } from 'react-router-dom';
 import userSvg from '../../assets/user-circle-svgrepo-com.svg';
 import UnavList from '../store/UnavList';
+import { useAuth } from '../../Auth/store/AuthContext';
+import { useState } from 'react';
 
 const UnavBar = () => {
+  const {user} = useAuth();
+
+  const [activeItem, setActiveItem] = useState(location.pathname)
   return (
     <div className="w-72 h-screen bg-white border-r border-gray-200 shadow-sm flex flex-col overflow-hidden sticky top-0">
       {/* Profile Section - with fixed height */}
@@ -16,23 +21,20 @@ const UnavBar = () => {
             <h1>+</h1>
           </button>
         </div>
-        <h2 className="text-lg font-semibold text-gray-800">User Profile</h2>
+        <h2 className="text-lg font-semibold text-gray-800">{user.name}</h2>
       </div>
       
-      {/* Navigation Links - with flex-grow to take remaining space */}
-      <nav className="flex-grow overflow-y-auto py-2 px-4">
+      <nav className="flex overflow-y-auto py-2 px-4">
         <ul className="space-y-1">
           {UnavList.map((item, index) => (
             <li key={index}>
               <NavLink 
+                onClick={() => setActiveItem(item.path)}
                 to={item.path || `/hire/profile/${item.name.toLowerCase().replace(/\s+/g, '-')}`} 
-                className={({ isActive }) => 
-                  `block py-2 px-3 rounded-lg transition-colors ${
-                    isActive 
-                      ? "bg-blue-50 text-blue-600 font-medium border-l-4 border-blue-600" 
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`
-                }
+                className={`block py-2 px-3 rounded-lg transition-colors
+                    ${activeItem === item.path ? "bg-blue-50 text-blue-600 font-medium border-l-4 border-blue-600" : "text-gray-700 hover:bg-gray-100"}
+                  }
+                `}
               >
                 {item.name}
               </NavLink>
