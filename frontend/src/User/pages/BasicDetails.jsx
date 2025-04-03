@@ -1,11 +1,22 @@
+import { useState } from "react"
+import BasicDetailsForm from "../components/BasicDetailsForm";
+
 const BasicDetails = () => {
+
+  const [showModel, setShowModel] = useState(false);
+
   return (
     <div className="h-[calc(100vh-80px)] flex flex-col p-4 container mx-auto overflow-y-auto">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Basic Details</h2>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors">
+        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors" onClick={() => setShowModel(true)}>
           Edit
         </button>
+        {showModel && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <BasicDetailsForm onClose={() => {setShowModel(false)}}/>
+          </div>
+        )}
       </div>
       
       <div className="p-6 mb-6">
