@@ -5,7 +5,8 @@ const detailsSchema = new mongoose.Schema({
     gender: {type: String, required: true},
     currentCollege: {type: String, required: true},
     summary: {type: String},
-    address:{type: String, required:true},
+    presentaddress:{type: String, required:true},
+    permanentaddress:{type: String, required: true},
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
