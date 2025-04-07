@@ -32,18 +32,20 @@ export default function Thumbnail() {
           <span className='block'>Dream Job</span>
         </div>
 
-        <button 
-          onClick={() => handleNavigate('/login')} 
-          className='bg-black text-white h-[3rem] m-4 sm:m-10 w-[9rem] rounded-3xl font-serif hover:bg-gray-800 transition-colors'
-        >
-          Hire Me
-        </button>
-        <button 
-          className='bg-black text-white h-[3rem] m-4 sm:m-10 w-[9rem] rounded-3xl font-serif hover:bg-gray-800 transition-colors'
-          onClick={() => handleNavigate('/post-job/login')}
-        >
-          Post a Job
-        </button>
+        <div className='flex flex-col sm:flex-row justify-center sm:justify-start'>
+          <button 
+            onClick={() => handleNavigate('/login')} 
+            className='bg-black text-white h-[3rem] m-4 sm:m-10 w-[9rem] rounded-3xl font-serif hover:bg-gray-800 transition-colors'
+          >
+            Hire Me
+          </button>
+          <button 
+            className='bg-black text-white h-[3rem] m-4 sm:m-10 w-[9rem] rounded-3xl font-serif hover:bg-gray-800 transition-colors'
+            onClick={() => handleNavigate('/post-job/login')}
+          >
+            Post a Job
+          </button>
+        </div>
       </div>  
     </>
   )
